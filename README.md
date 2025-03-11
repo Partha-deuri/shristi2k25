@@ -27,7 +27,7 @@ Shristi2k25 is the official website for **Shristi**, the annual technical fest o
 
 ### Clone the Repository
 ```sh
-git clone https://github.com/your-username/shristi2k25.git
+git clone https://github.com/Partha-deuri/shristi2k25.git
 cd shristi2k25
 ```
 
