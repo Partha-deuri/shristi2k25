@@ -9,6 +9,15 @@ exports.getEvents = async (req, res) => {
   }
 };
 
+exports.getDepartmentWiseEvents = async (req, res) => {
+  try {
+      const events = await Event.find({ department: req.params.department });
+      res.json(events);
+  } catch (error) {
+      res.status(500).json({ message: "Server error" });
+  }
+};
+
 exports.createEvent = async (req, res) => {
   const event = new Event(req.body);
   try {

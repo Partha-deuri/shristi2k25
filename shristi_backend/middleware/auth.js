@@ -19,8 +19,8 @@ const isAdmin = (req, res, next) => {
 };
 
 const isIncharge = (req, res, next) => {
-  if (req.user.role !== 'incharge') return res.status(403).json({ message: 'Access denied' });
+  if (req.user.role !== 'incharge' || req.user.role !== 'admin') return res.status(403).json({ message: 'Access denied' });
   next();
 };
 
-module.exports = { auth, isAdmin };
+module.exports = { auth, isAdmin, isIncharge };
