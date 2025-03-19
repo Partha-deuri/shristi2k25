@@ -16,6 +16,7 @@ import Dashboard from './pages/Dashboard';
 import SignupIncharge from './pages/SignupIncharge';
 import LoginIncharge from './pages/LoginIncharge';
 import DashboardIC from './pages/DashboardIC.jsx';
+import TedxNerist from './pages/TedxNerist.jsx';
 
 const App = () => {
   return (
@@ -33,6 +34,8 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        {/* TEDxNERIST  */}
+        <Route path="/tedxnerist" element={<TedxNerist />} />
         {/* Incharge Paths */}
         <Route path="/ic/signup" element={<SignupIncharge />} />
         <Route path="/ic/login" element={<LoginIncharge />} />
