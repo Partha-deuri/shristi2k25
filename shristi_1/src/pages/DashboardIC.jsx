@@ -9,16 +9,7 @@ import {
 } from "react-icons/fa";
 import axios from "axios";
 
-const Dashboard = () => {
-    // const [user] = useState({
-    //   name: "John Doe",
-    //   email: "john.doe@example.com",
-    //   registeredEvents: [
-    //     { id: 1, name: "Hackathon", date: "March 10, 2025" },
-    //     { id: 2, name: "Robotics Challenge", date: "March 11, 2025" },
-    //   ],
-    //   notifications: ["Hackathon registration confirmed!", "New event added: AI Workshop!"],
-    // });
+const DashboardIC = () => {
     const [user, setUser] = useState(null);
     // const [events, setEvents] = useState([]);
     const [notifications, setNotifications] = useState([]);
@@ -167,4 +158,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default DashboardIC;

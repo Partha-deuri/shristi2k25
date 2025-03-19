@@ -4,7 +4,7 @@ shristi_1/node_modules/
 shristi_backend/node_modules/
 
 # Build & Dependencies
-dist/
+*/dist/
 build/
 shristi_1/build/
 shristi_backend/build/

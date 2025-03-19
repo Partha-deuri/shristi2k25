@@ -15,7 +15,7 @@ import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import SignupIncharge from './pages/SignupIncharge';
 import LoginIncharge from './pages/LoginIncharge';
-import DashboardIC from './pages/DashboardICjsx';
+import DashboardIC from './pages/DashboardIC.jsx';
 
 const App = () => {
   return (

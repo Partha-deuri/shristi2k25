@@ -1,10 +1,11 @@
 const express = require('express');
-const { getEvents, createEvent, registerForEvent, updateEvent, deleteEvent } = require('../controllers/eventController');
+const { getEvents, createEvent, registerForEvent, updateEvent, deleteEvent, getDepartmentWiseEvents } = require('../controllers/eventController');
 const { auth, isAdmin, isIncharge } = require('../middleware/auth');
 
 const router = express.Router();
 
 router.get('/', getEvents);
+router.get('/department/:department', getDepartmentWiseEvents); // New route for department-wise events
 router.post('/:id/register', auth, registerForEvent);
 
 router.post('/', auth, isIncharge, createEvent);
