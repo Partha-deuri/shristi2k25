@@ -16,7 +16,7 @@ const Navbar = () => {
             const token = localStorage.getItem("token");
             if (token) {
                 const userRes = await axios.get(
-                    "http://localhost:5000/api/dashboard/userpic",
+                    `${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/dashboard/userpic`,
                     {
                         headers: { Authorization: `Bearer ${token}` },
                     }

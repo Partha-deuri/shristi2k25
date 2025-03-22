@@ -29,7 +29,7 @@ const Dashboard = () => {
                 setUser(userRes.data);
 
                 const notificationsRes = await axios.get(
-                    `${import.meta.env.VITE_API_URL}/api/dashboard/notifications`,
+                    `${import.meta.env.VITE_API_URL}/dashboard/notifications`,
                     {
                         headers: { Authorization: `Bearer ${token}` },
                     }
