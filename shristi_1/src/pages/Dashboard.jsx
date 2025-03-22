@@ -21,7 +21,7 @@ const Dashboard = () => {
                 if (!token) navigate("/login");
 
                 const userRes = await axios.get(
-                    `${import.meta.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/dashboard/user`,
+                    `${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/dashboard/user`,
                     {
                         headers: { Authorization: `Bearer ${token}` },
                     }
@@ -29,7 +29,7 @@ const Dashboard = () => {
                 setUser(userRes.data);
 
                 const notificationsRes = await axios.get(
-                    `${import.meta.env.REACT_APP_API_URL}/api/dashboard/notifications`,
+                    `${import.meta.env.VITE_API_URL}/api/dashboard/notifications`,
                     {
                         headers: { Authorization: `Bearer ${token}` },
                     }

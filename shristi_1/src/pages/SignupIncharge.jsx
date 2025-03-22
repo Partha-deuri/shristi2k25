@@ -31,7 +31,7 @@ const SignupIncharge = () => {
         console.log("Signing up with:", name, email, password);
         try {
             const res = await axios.post(
-                `${import.meta.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/auth/signup`,
+                `${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/signup`,
                 { name, email, password, role: "incharge" }
             );
             localStorage.setItem("token", res.data.token);

@@ -35,7 +35,7 @@ const Events = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/events`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/events`);
         setEvents(res.data);
       } catch (err) {
         console.error(err);
