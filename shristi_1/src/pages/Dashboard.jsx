@@ -10,17 +10,7 @@ import {
 import axios from "axios";
 
 const Dashboard = () => {
-    // const [user] = useState({
-    //   name: "John Doe",
-    //   email: "john.doe@example.com",
-    //   registeredEvents: [
-    //     { id: 1, name: "Hackathon", date: "March 10, 2025" },
-    //     { id: 2, name: "Robotics Challenge", date: "March 11, 2025" },
-    //   ],
-    //   notifications: ["Hackathon registration confirmed!", "New event added: AI Workshop!"],
-    // });
     const [user, setUser] = useState(null);
-    // const [events, setEvents] = useState([]);
     const [notifications, setNotifications] = useState([]);
     const navigate = useNavigate();
 
@@ -31,20 +21,15 @@ const Dashboard = () => {
                 if (!token) navigate("/login");
 
                 const userRes = await axios.get(
-                    "http://localhost:5000/api/dashboard/user",
+                    `${import.meta.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/dashboard/user`,
                     {
                         headers: { Authorization: `Bearer ${token}` },
                     }
                 );
                 setUser(userRes.data);
 
-                // const eventsRes = await axios.get('http://localhost:5000/api/dashboard/events', {
-                //   headers: { Authorization: `Bearer ${token}` },
-                // });
-                // setEvents(eventsRes.data);
-
                 const notificationsRes = await axios.get(
-                    "http://localhost:5000/api/dashboard/notifications",
+                    `${import.meta.env.REACT_APP_API_URL}/api/dashboard/notifications`,
                     {
                         headers: { Authorization: `Bearer ${token}` },
                     }

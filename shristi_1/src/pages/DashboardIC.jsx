@@ -22,7 +22,7 @@ const DashboardIC = () => {
                 if (!token) navigate("/login");
 
                 const userRes = await axios.get(
-                    "http://localhost:5000/api/dashboard/user",
+                    `${import.meta.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/dashboard/user`,
                     {
                         headers: { Authorization: `Bearer ${token}` },
                     }
@@ -35,7 +35,10 @@ const DashboardIC = () => {
                 // setEvents(eventsRes.data);
 
                 const notificationsRes = await axios.get(
-                    "http://localhost:5000/api/dashboard/notifications",
+                    `${
+                        import.meta.env.REACT_APP_API_URL ||
+                        "http://localhost:5000/api"
+                    }/dashboard/notifications`,
                     {
                         headers: { Authorization: `Bearer ${token}` },
                     }
