@@ -5,7 +5,7 @@ const { auth, isAdmin, isIncharge } = require('../middleware/auth');
 const router = express.Router();
 
 router.get('/', getEvents);
-router.get('/department/:department', getDepartmentWiseEvents); // New route for department-wise events
+router.get('/department', auth, isIncharge, getDepartmentWiseEvents); // Updated route for department-wise events
 router.post('/:id/register', auth, registerForEvent);
 
 router.post('/', auth, isIncharge, createEvent);

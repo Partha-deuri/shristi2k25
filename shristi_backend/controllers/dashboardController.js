@@ -1,4 +1,5 @@
 const Event = require('../models/Event');
+const Incharge = require('../models/Incharge');
 const User = require('../models/User');
 
 exports.getUser = async (req, res) => {
@@ -32,6 +33,10 @@ exports.getNotifications = async (req, res) => {
 exports.getName = async (req, res) => {
     try {
         const user = await User.findById(req.user.id);
+        if (!user && req.user.role === "incharge") {
+            const incharge = await Incharge.findById(req.user.id);
+            return res.json(incharge.name);
+        }
         res.json(user.name);
     } catch (error) {
         res.status(500).json({ message: "Server error" });

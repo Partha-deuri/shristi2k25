@@ -2,12 +2,11 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 
 exports.signup = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, whatsappNumber, isNeristian, department, rollNumber, year } = req.body;
   try { 
-    const user = new User({ name, email, password });
+    const user = new User({ name, email, password, whatsappNumber, isNeristian, department, rollNumber, year });
     await user.save();
     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    // res.json({ token });
     res.status(201).json({ message: 'User created successfully' , token});
   } catch (err) {
     res.status(400).json({ message: err.message });

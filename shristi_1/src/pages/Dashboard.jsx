@@ -15,13 +15,21 @@ const Dashboard = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) navigate("/login");
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+    useEffect(() => {
         const fetchData = async () => {
             try {
                 const token = localStorage.getItem("token");
                 if (!token) navigate("/login");
 
                 const userRes = await axios.get(
-                    `${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/dashboard/user`,
+                    `${
+                        import.meta.env.VITE_API_URL ||
+                        "http://localhost:5000/api"
+                    }/dashboard/user`,
                     {
                         headers: { Authorization: `Bearer ${token}` },
                     }
@@ -29,7 +37,7 @@ const Dashboard = () => {
                 setUser(userRes.data);
 
                 const notificationsRes = await axios.get(
-                    `${import.meta.env.VITE_API_URL}/dashboard/notifications`,
+                    `${import.meta.env.VITE_API_URL||"http://localhost:5000/api"}/dashboard/notifications`,
                     {
                         headers: { Authorization: `Bearer ${token}` },
                     }
@@ -131,7 +139,7 @@ const Dashboard = () => {
                         </h3>
                         {notifications.length > 0 ? (
                             <ul className="mt-3 space-y-2">
-                                {notifications.map((notification, index) => (
+                                {notifications?.map((notification, index) => (
                                     <li
                                         key={index}
                                         className="bg-gray-800 p-4 rounded-lg"

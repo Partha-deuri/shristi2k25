@@ -10,4 +10,4 @@ router.get('/userpic', auth, getName);
 router.get('/event', auth,  getEvent);
 router.get('/notifications', auth, getNotifications);
 
-module.exports = router; 
+module.exports = router;  

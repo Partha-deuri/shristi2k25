@@ -3,11 +3,21 @@ const bcrypt = require('bcryptjs');
 
 const InchargeSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
+  email: { 
+    type: String, 
+    required: true, 
+    unique: true, 
+    match: [/^\S+@\S+\.\S+$/, 'Please use a valid email address'] 
+  },
   password: { type: String, required: true },
   role: { type: String, enum: ["incharge", "admin"], default: "incharge" },
   department: { type: String, enum: ["CSE", "ECE", "EE", "AE", "ME", "CE"], required: true },
-  phoneNumber: { type: String, required: true },
+  phoneNumber: { 
+    type: String, 
+    required: true, 
+    minlength: 10, 
+    maxlength: 15 
+  },
 });
 
 // Hash password before saving
@@ -20,7 +30,11 @@ InchargeSchema.pre('save', async function (next) {
 
 // Compare password
 InchargeSchema.methods.comparePassword = async function (password) {
-  return await bcrypt.compare(password, this.password);
+  try {
+    return await bcrypt.compare(password, this.password);
+  } catch (error) {
+    throw new Error('Password comparison failed');
+  }
 };
 
 module.exports = mongoose.model('Incharge', InchargeSchema);

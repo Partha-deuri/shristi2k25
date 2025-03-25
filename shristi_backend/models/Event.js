@@ -13,6 +13,7 @@ const EventSchema = new mongoose.Schema({
       createdAt: { type: Date, default: Date.now },
     },
   ],
+  registrationsClosed: { type: Boolean, default: false }, // New field to track registration status
 });
 
 module.exports = mongoose.model('Event', EventSchema);

@@ -35,6 +35,7 @@ const Login = () => {
                 `${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/login`,
                 { email, password }
             );
+            // console.log(res.data);
             localStorage.setItem("token", res.data.token);
             navigate("/dashboard");
         } catch (err) {

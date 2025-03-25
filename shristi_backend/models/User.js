@@ -10,6 +10,10 @@ const UserSchema = new mongoose.Schema({
   notifications: { type: [String], default: [] },
   rollNumber: { type: String, required: true },
   phoneNumber: { type: String, required: true },
+  whatsappNumber: { type: String, required: true },
+  isNeristian: { type: Boolean, default: false },
+  department: { type: String },
+  year: { type: String },
 });
 
 // Hash password before saving

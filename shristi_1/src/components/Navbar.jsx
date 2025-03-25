@@ -4,11 +4,14 @@ import axios from "axios";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        checkloggedin();
+        const interval = setInterval(() => {
+            checkloggedin();
+        }, 5000);
+
+        return () => clearInterval(interval); // Cleanup on unmount
     }, []);
 
     const checkloggedin = async () => {
@@ -16,18 +19,22 @@ const Navbar = () => {
             const token = localStorage.getItem("token");
             if (token) {
                 const userRes = await axios.get(
-                    `${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/dashboard/userpic`,
+                    `${
+                        import.meta.env.VITE_API_URL ||
+                        "http://localhost:5000/api"
+                    }/dashboard/userpic`,
                     {
                         headers: { Authorization: `Bearer ${token}` },
                     }
                 );
                 setUser(userRes.data);
+            } else {
+                setUser(null); // Clear user if no token
             }
         } catch (err) {
             console.error(err);
         }
     };
-
     return (
         <nav className="fixed top-0 left-0 w-full bg-indigo-700 text-white shadow-lg z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
@@ -94,11 +101,13 @@ const Navbar = () => {
                             Login
                         </Link>
                     )}
-                    {user && (
+                    {user != null && (
                         <Link
                             to="/dashboard"
                             className="text-2xl font-extrabold flex justify-center items-center py-1 px-3 bg-yellow-500 rounded-full hover:bg-yellow-400"
-                        >{user.trim()[0]}</Link>
+                        >
+                            {user?.trim()[0]}
+                        </Link>
                     )}
                 </div>
             </div>

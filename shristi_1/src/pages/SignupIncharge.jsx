@@ -7,6 +7,8 @@ const SignupIncharge = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [department, setDepartment] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -28,14 +30,14 @@ const SignupIncharge = () => {
             alert("Passwords do not match!");
             return;
         }
-        console.log("Signing up with:", name, email, password);
+        console.log("Signing up with:", name, email, password, department, phoneNumber);
         try {
             const res = await axios.post(
-                `${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/signup`,
-                { name, email, password, role: "incharge" }
+                `${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/incharge/signup`,
+                { name, email, password, department, phoneNumber, role: "incharge" }
             );
-            localStorage.setItem("token", res.data.token);
-            navigate("/dashboard");
+            localStorage.setItem("token", res.data.token); localStorage.setItem("incharge", true);
+            navigate("/ic/dashboard");
         } catch (err) {
             console.error(err);
         }
@@ -114,6 +116,38 @@ const SignupIncharge = () => {
                             placeholder="Confirm your password"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    {/* Department Input */}
+                    <div>
+                        <label className="block text-gray-400">Department</label>
+                        <select
+                            className="w-full px-4 py-2 mt-1 pr-8 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none appearance-none"
+                            value={department}
+                            onChange={(e) => setDepartment(e.target.value)}
+                            required
+                        >
+                            <option value="" disabled>Select your department</option>
+                            <option value="CSE">CSE</option>
+                            <option value="ECE">ECE</option>
+                            <option value="EE">EE</option>
+                            <option value="AE">AE</option>
+                            <option value="ME">ME</option>
+                            <option value="CE">CE</option>
+                        </select>
+                    </div>
+
+                    {/* Phone Number Input */}
+                    <div>
+                        <label className="block text-gray-400">Phone Number</label>
+                        <input
+                            type="text"
+                            className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none"
+                            placeholder="Enter your phone number"
+                            value={phoneNumber}
+                            onChange={(e) => setPhoneNumber(e.target.value)}
                             required
                         />
                     </div>
