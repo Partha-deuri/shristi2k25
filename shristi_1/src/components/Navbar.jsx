@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import logo from "/logo_circle.png"; // Import the logo
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -36,9 +37,10 @@ const Navbar = () => {
         }
     };
     return (
-        <nav className="fixed top-0 left-0 w-full bg-indigo-700 text-white shadow-lg z-50">
+        <nav className="fixed top-0 left-0 w-full bg-gradient-to-r from-indigo-800 via-purple-700 to-indigo-800 text-white shadow-lg z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
-                <Link to="/" className="text-2xl font-bold">
+                <Link to="/" className="flex items-center text-2xl font-bold">
+                    <img src={logo} alt="Shristi Logo" className="h-10 mr-2" /> {/* Add logo */}
                     Shristi
                 </Link>
 
@@ -52,43 +54,43 @@ const Navbar = () => {
 
                 {/* Navigation Links */}
                 <div
-                    className={`absolute md:static bg-indigo-700 md:flex space-x-6 top-16 left-0 w-full md:w-auto transition-all ${
+                    className={`absolute md:static 0 md:flex space-x-6 top-16 left-0 w-full md:w-auto transition-all ${
                         isOpen ? "block" : "hidden"
                     }`}
                 >
                     <Link
                         to="/"
-                        className="block py-2 px-4 hover:bg-indigo-600"
+                        className="block py-2 px-4 bg-transparent rounded-lg hover:bg-indigo-600 hover:scale-105 transition-transform"
                     >
                         Home
                     </Link>
                     <Link
                         to="/events"
-                        className="block py-2 px-4 hover:bg-indigo-600"
+                        className="block py-2 px-4 bg-transparent rounded-lg hover:bg-indigo-600 hover:scale-105 transition-transform"
                     >
                         Events
                     </Link>
                     <Link
                         to="/timeline"
-                        className="block py-2 px-4 hover:bg-indigo-600"
+                        className="block py-2 px-4 bg-transparent rounded-lg hover:bg-indigo-600 hover:scale-105 transition-transform"
                     >
                         Timeline
                     </Link>
                     <Link
                         to="/photos"
-                        className="block py-2 px-4 hover:bg-indigo-600"
+                        className="block py-2 px-4 bg-transparent rounded-lg hover:bg-indigo-600 hover:scale-105 transition-transform"
                     >
                         Photos
                     </Link>
                     <Link
                         to="/sponsors"
-                        className="block py-2 px-4 hover:bg-indigo-600"
+                        className="block py-2 px-4 bg-transparent rounded-lg hover:bg-indigo-600 hover:scale-105 transition-transform"
                     >
                         Sponsors
                     </Link>
                     <Link
                         to="/developers"
-                        className="block py-2 px-4 hover:bg-indigo-600"
+                        className="block py-2 px-4 bg-transparent rounded-lg hover:bg-indigo-600 hover:scale-105 transition-transform"
                     >
                         Developers
                     </Link>
@@ -96,7 +98,7 @@ const Navbar = () => {
                     {!user && (
                         <Link
                             to="/login"
-                            className="block py-2 px-4 bg-yellow-500 rounded-lg hover:bg-yellow-400"
+                            className="block py-2 px-4 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-semibold rounded-lg shadow-md hover:from-yellow-500 hover:to-yellow-600 hover:scale-105 transition-transform"
                         >
                             Login
                         </Link>
@@ -104,7 +106,7 @@ const Navbar = () => {
                     {user != null && (
                         <Link
                             to="/dashboard"
-                            className="text-2xl font-extrabold flex justify-center items-center py-1 px-3 bg-yellow-500 rounded-full hover:bg-yellow-400"
+                            className="text-2xl font-extrabold flex justify-center items-center py-1 px-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black rounded-full shadow-md hover:from-yellow-500 hover:to-yellow-600 hover:scale-105 transition-transform"
                         >
                             {user?.trim()[0]}
                         </Link>
