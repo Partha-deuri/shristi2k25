@@ -43,88 +43,77 @@ const SignupIncharge = () => {
         }
         // Add authentication logic here
     };
-    // const [name, setName] = useState('');
-    // const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
-    // const navigate = useNavigate();
-
-    // const handleSubmit = async (e) => {
-    //   e.preventDefault();
-    //   try {
-    //     const res = await axios.post('http://localhost:5000/api/auth/signup', { name, email, password });
-    //     localStorage.setItem('token', res.data.token);
-    //     navigate('/dashboard');
-    //   } catch (err) {
-    //     console.error(err);
-    //   }
-    // };
 
     return (
-        <div className="bg-gray-900 text-white min-h-screen flex items-center justify-center px-6">
-            <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
-                <h2 className="text-3xl font-bold text-center mb-6">
+        <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white min-h-screen flex items-center justify-center px-6 py-30">
+            <div className="bg-gray-800 p-8 rounded-lg shadow-2xl w-full max-w-md transform transition duration-500">
+                <h2 className="text-4xl font-extrabold text-center mb-6 text-yellow-500">
                     Create a Shristi Incharge Account
                 </h2>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    {/* Name Input */}
-                    <div>
-                        <label className="block text-gray-400">Full Name</label>
-                        <input
-                            type="text"
-                            className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none"
-                            placeholder="Enter your full name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            required
-                        />
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {/* Name Input */}
+                        <div>
+                            <label className="block text-gray-400 font-medium">Full Name</label>
+                            <input
+                                type="text"
+                                className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none text-gray-200 placeholder-gray-500"
+                                placeholder="Enter your full name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                required
+                            />
+                        </div>
+
+                        {/* Email Input */}
+                        <div>
+                            <label className="block text-gray-400 font-medium">Email</label>
+                            <input
+                                type="email"
+                                className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none text-gray-200 placeholder-gray-500"
+                                placeholder="Enter your email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                        </div>
                     </div>
 
-                    {/* Email Input */}
-                    <div>
-                        <label className="block text-gray-400">Email</label>
-                        <input
-                            type="email"
-                            className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none"
-                            placeholder="Enter your email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {/* Password Input */}
+                        <div>
+                            <label className="block text-gray-400 font-medium">Password</label>
+                            <input
+                                type="password"
+                                className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none text-gray-200 placeholder-gray-500"
+                                placeholder="Enter your password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </div>
 
-                    {/* Password Input */}
-                    <div>
-                        <label className="block text-gray-400">Password</label>
-                        <input
-                            type="password"
-                            className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none"
-                            placeholder="Enter your password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                    </div>
-
-                    {/* Confirm Password Input */}
-                    <div>
-                        <label className="block text-gray-400">
-                            Confirm Password
-                        </label>
-                        <input
-                            type="password"
-                            className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none"
-                            placeholder="Confirm your password"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            required
-                        />
+                        {/* Confirm Password Input */}
+                        <div>
+                            <label className="block text-gray-400 font-medium">
+                                Confirm Password
+                            </label>
+                            <input
+                                type="password"
+                                className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none text-gray-200 placeholder-gray-500"
+                                placeholder="Confirm your password"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                required
+                            />
+                        </div>
                     </div>
 
                     {/* Department Input */}
                     <div>
-                        <label className="block text-gray-400">Department</label>
+                        <label className="block text-gray-400 font-medium">Department</label>
                         <select
-                            className="w-full px-4 py-2 mt-1 pr-8 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none appearance-none"
+                            className="w-full px-4 py-2 mt-1 pr-8 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none appearance-none text-gray-200"
                             value={department}
                             onChange={(e) => setDepartment(e.target.value)}
                             required
@@ -141,10 +130,10 @@ const SignupIncharge = () => {
 
                     {/* Phone Number Input */}
                     <div>
-                        <label className="block text-gray-400">Phone Number</label>
+                        <label className="block text-gray-400 font-medium">Phone Number</label>
                         <input
                             type="text"
-                            className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none"
+                            className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none text-gray-200 placeholder-gray-500"
                             placeholder="Enter your phone number"
                             value={phoneNumber}
                             onChange={(e) => setPhoneNumber(e.target.value)}
@@ -155,18 +144,18 @@ const SignupIncharge = () => {
                     {/* Signup Button */}
                     <button
                         type="submit"
-                        className="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-2 rounded-lg transition"
+                        className="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-2 rounded-lg transition duration-300 transform hover:scale-105 shadow-lg"
                     >
                         Incharge Sign Up
                     </button>
                 </form>
 
                 {/* Login Link */}
-                <p className="text-center text-gray-400 mt-4">
+                <p className="text-center text-gray-400 mt-6">
                     Already have an account?{" "}
                     <Link
                         to="/ic/login"
-                        className="text-yellow-500 hover:underline"
+                        className="text-yellow-500 hover:underline font-medium"
                     >
                         Login here
                     </Link>

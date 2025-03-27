@@ -57,6 +57,9 @@ const Home = () => {
               <Link to="/events" className="px-6 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg text-lg font-semibold hover:shadow-lg hover:scale-105 transition-transform">
                 Explore Events
               </Link>
+              <Link to="/game" className="px-6 py-3 bg-gradient-to-r from-green-500 to-lime-500 rounded-lg text-lg font-semibold hover:shadow-lg hover:scale-105 transition-transform">
+                Play Game
+              </Link>
               <Link to="/signup" className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-blue-500 rounded-lg text-lg font-semibold hover:shadow-lg hover:scale-105 transition-transform">
                 Register Now
               </Link>

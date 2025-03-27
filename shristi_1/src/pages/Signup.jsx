@@ -77,51 +77,47 @@ const Signup = () => {
     };
 
     return (
-        <div className="bg-gray-900 text-white min-h-screen flex items-center justify-center px-6 pt-12">
-            <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
-                <h2 className="text-3xl font-bold text-center mb-6">
+        <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white min-h-screen flex items-center justify-center px-6 py-30">
+            <div className="bg-gray-800 p-8 rounded-lg shadow-2xl w-full max-w-md transform transition duration-500">
+                <h2 className="text-4xl font-extrabold text-center mb-6 text-yellow-500">
                     Create an Account
                 </h2>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {/* Name Input */}
-                        <div>
-                            <label className="block text-gray-400">
-                                Full Name
-                            </label>
-                            <input
-                                type="text"
-                                className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none"
-                                placeholder="Enter your full name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                required
-                            />
-                        </div>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Name Input */}
+                    <div>
+                        <label className="block text-gray-400 font-medium">Full Name</label>
+                        <input
+                            type="text"
+                            className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none text-gray-200 placeholder-gray-500"
+                            placeholder="Enter your full name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required
+                        />
+                    </div>
 
-                        {/* Email Input */}
-                        <div>
-                            <label className="block text-gray-400">Email</label>
-                            <input
-                                type="email"
-                                className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none"
-                                placeholder="Enter your email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                            />
-                        </div>
+                    {/* Email Input */}
+                    <div>
+                        <label className="block text-gray-400 font-medium">Email</label>
+                        <input
+                            type="email"
+                            className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none text-gray-200 placeholder-gray-500"
+                            placeholder="Enter your email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {/* Password Input */}
                         <div>
-                            <label className="block text-gray-400">
+                            <label className="block text-gray-400 font-medium">
                                 Password
                             </label>
                             <input
                                 type="password"
-                                className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none"
+                                className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none text-gray-200 placeholder-gray-500"
                                 placeholder="Enter your password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -131,12 +127,12 @@ const Signup = () => {
 
                         {/* Confirm Password Input */}
                         <div>
-                            <label className="block text-gray-400">
+                            <label className="block text-gray-400 font-medium">
                                 Confirm Password
                             </label>
                             <input
                                 type="password"
-                                className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none"
+                                className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none text-gray-200 placeholder-gray-500"
                                 placeholder="Confirm your password"
                                 value={confirmPassword}
                                 onChange={(e) =>
@@ -149,12 +145,12 @@ const Signup = () => {
 
                     {/* WhatsApp Number Input */}
                     <div>
-                        <label className="block text-gray-400">
+                        <label className="block text-gray-400 font-medium">
                             WhatsApp Number
                         </label>
                         <input
                             type="text"
-                            className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none"
+                            className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none text-gray-200 placeholder-gray-500"
                             placeholder="Enter your WhatsApp number"
                             value={whatsappNumber}
                             onChange={(e) => {
@@ -174,7 +170,7 @@ const Signup = () => {
 
                     {/* NERISTIAN Slide Toggle */}
                     <div className="flex items-center justify-between">
-                        <label className="block text-gray-400">Are you a NERISTIAN?</label>
+                        <label className="block text-gray-400 font-medium">Are you a NERISTIAN?</label>
                         <label className="relative inline-flex items-center cursor-pointer">
                             <input
                                 type="checkbox"
@@ -196,12 +192,12 @@ const Signup = () => {
                     {isNeristian && (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-gray-400">
+                                <label className="block text-gray-400 font-medium">
                                     Department
                                 </label>
                                 <input
                                     type="text"
-                                    className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none"
+                                    className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none text-gray-200 placeholder-gray-500"
                                     placeholder="Enter your department"
                                     value={department}
                                     onChange={(e) =>
@@ -211,12 +207,12 @@ const Signup = () => {
                                 />
                             </div>
                             <div>
-                                <label className="block text-gray-400">
+                                <label className="block text-gray-400 font-medium">
                                     Roll Number
                                 </label>
                                 <input
                                     type="text"
-                                    className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none"
+                                    className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none text-gray-200 placeholder-gray-500"
                                     placeholder="Enter your roll number"
                                     value={rollNumber}
                                     onChange={(e) =>
@@ -226,12 +222,12 @@ const Signup = () => {
                                 />
                             </div>
                             <div>
-                                <label className="block text-gray-400">
+                                <label className="block text-gray-400 font-medium">
                                     Year
                                 </label>
                                 <input
                                     type="text"
-                                    className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none"
+                                    className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none text-gray-200 placeholder-gray-500"
                                     placeholder="Enter your year"
                                     value={year}
                                     onChange={(e) => setYear(e.target.value)}
@@ -244,18 +240,18 @@ const Signup = () => {
                     {/* Signup Button */}
                     <button
                         type="submit"
-                        className="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-2 rounded-lg transition"
+                        className="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-2 rounded-lg transition duration-300 transform hover:scale-105 shadow-lg"
                     >
                         Sign Up
                     </button>
                 </form>
 
                 {/* Login Link */}
-                <p className="text-center text-gray-400 mt-4">
+                <p className="text-center text-gray-400 mt-6">
                     Already have an account?{" "}
                     <Link
                         to="/login"
-                        className="text-yellow-500 hover:underline"
+                        className="text-yellow-500 hover:underline font-medium"
                     >
                         Login here
                     </Link>

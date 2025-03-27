@@ -54,7 +54,7 @@ const Navbar = () => {
 
                 {/* Navigation Links */}
                 <div
-                    className={`absolute md:static 0 md:flex space-x-6 top-16 left-0 w-full md:w-auto transition-all ${
+                    className={`absolute md:static 0 md:flex space-x-6 top-16 left-0 w-full md:w-auto transition-all font-bold ${
                         isOpen ? "block" : "hidden"
                     }`}
                 >
@@ -94,11 +94,17 @@ const Navbar = () => {
                     >
                         Developers
                     </Link>
+                    <Link
+                        to="/tedxnerist"
+                        className="block py-2 px-4 bg-transparent rounded-lg border-2 border-red-600 hover:bg-red-500 hover:scale-105 transition-transform"
+                    >
+                        TEDxNERIST
+                    </Link>
 
                     {!user && (
                         <Link
                             to="/login"
-                            className="block py-2 px-4 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-semibold rounded-lg shadow-md hover:from-yellow-500 hover:to-yellow-600 hover:scale-105 transition-transform"
+                            className="block py-2 px-4 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold rounded-lg shadow-md hover:from-yellow-500 hover:to-yellow-600 hover:scale-105 transition-transform"
                         >
                             Login
                         </Link>

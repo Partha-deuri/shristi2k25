@@ -1,21 +1,21 @@
 import { useState } from "react";
 
 const photos = [
-  "/images/photo1.jpg",
-  "/images/photo2.jpg",
-  "/images/photo3.jpg",
-  "/images/photo4.jpg",
-  "/images/photo5.jpg",
-  "/images/photo6.jpg",
-  "/images/photo7.jpg",
-  "/images/photo8.jpg",
+  "/demo_2.jpg",
+  "/demo_2.jpg",
+  "/demo_2.jpg",
+  "/demo_2.jpg",
+  "/demo_2.jpg",
+  "/demo_2.jpg",
+  "/demo_2.jpg",
+  "/demo_2.jpg",
 ];
 
 const Photos = () => {
   const [selectedImage, setSelectedImage] = useState(null);
 
   return (
-    <div className="bg-gray-900 text-white min-h-screen py-16 px-6">
+    <div className="bg-gray-900 text-white min-h-screen py-16 px-6 mt-16">
       <div className="text-center mb-12">
         <h1 className="text-5xl font-bold">Event Gallery</h1>
         <p className="text-gray-400 text-lg mt-2">
@@ -48,7 +48,7 @@ const Photos = () => {
         <div className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50">
           <div className="relative max-w-3xl w-full p-4">
             <button
-              className="absolute top-4 right-4 bg-red-500 text-white p-2 rounded-full text-xl"
+              className="absolute top-4 right-4 bg-red-500 text-white p-2 rounded-full text-xl flex items-center justify-center w-10 h-10 hover:bg-red-600 transition duration-300 cursor-pointer"
               onClick={() => setSelectedImage(null)}
             >
               ✕

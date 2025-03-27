@@ -17,6 +17,8 @@ import SignupIncharge from "./pages/SignupIncharge";
 import LoginIncharge from "./pages/LoginIncharge";
 import DashboardIC from "./pages/DashboardIC.jsx";
 import TedxNerist from "./pages/TedxNerist.jsx";
+import DepartmentEvents from "./pages/DepartmentEvents.jsx";
+import OtpPage from "./pages/OtpPage.jsx";
 
 const App = () => {
     return (
@@ -25,12 +27,17 @@ const App = () => {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/events" element={<Events />} />
+                <Route
+                    path="/events/:departmentId"
+                    element={<DepartmentEvents />}
+                />
                 <Route path="/event/:id" element={<EventDetails />} />
                 <Route path="/timeline" element={<Timeline />} />
                 <Route path="/game" element={<Game />} />
                 <Route path="/sponsors" element={<Sponsors />} />
                 <Route path="/photos" element={<Photos />} />
                 <Route path="/developers" element={<Developers />} />
+                <Route path="/verify/otp" element={<OtpPage />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/dashboard" element={<Dashboard />} />

@@ -3,14 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const LoginIncharge = () => {
-    // const [email, setEmail] = useState("");
-    // const [password, setPassword] = useState("");
-
-    // const handleSubmit = (e) => {
-    //   e.preventDefault();
-    //   console.log("Logging in with:", email, password);
-    //   // Add authentication logic here
-    // };
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -44,18 +36,18 @@ const LoginIncharge = () => {
     };
 
     return (
-        <div className="bg-gray-900 text-white min-h-screen flex items-center justify-center px-6">
-            <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
-                <h2 className="text-3xl font-bold text-center mb-6">
+        <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white min-h-screen flex items-center justify-center px-6 py-30">
+            <div className="bg-gray-800 p-8 rounded-lg shadow-2xl w-full max-w-md transform transition duration-500 mt-12">
+                <h2 className="text-4xl font-extrabold text-center mb-6 text-yellow-500">
                     Login to Shristi Incharges
                 </h2>
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Email Input */}
                     <div>
-                        <label className="block text-gray-400">Email</label>
+                        <label className="block text-gray-400 font-medium">Email</label>
                         <input
                             type="email"
-                            className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none"
+                            className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none text-gray-200 placeholder-gray-500"
                             placeholder="Enter your email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -79,18 +71,18 @@ const LoginIncharge = () => {
                     {/* Login Button */}
                     <button
                         type="submit"
-                        className="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-2 rounded-lg transition"
+                        className="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-2 rounded-lg transition duration-300 transform hover:scale-105 shadow-lg"
                     >
                         Incharge Login
                     </button>
                 </form>
 
                 {/* Signup Link */}
-                <p className="text-center text-gray-400 mt-4">
+                <p className="text-center text-gray-400 mt-6">
                     {"Don't have an account? "}
                     <Link
                         to="/ic/signup"
-                        className="text-yellow-500 hover:underline"
+                        className="text-yellow-500 hover:underline font-medium"
                     >
                         Sign up here
                     </Link>
