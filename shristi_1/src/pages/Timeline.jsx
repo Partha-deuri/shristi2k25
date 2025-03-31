@@ -15,9 +15,9 @@ const Timeline = () => {
         const sortedEvents = response.data.sort((a, b) => {
           const dateTimeA = new Date(`${a.date}T${a.time}`);
           const dateTimeB = new Date(`${b.date}T${b.time}`);
-          return dateTimeA - dateTimeB;
-        }); // Sort events by combined date and time
-        setEvents(sortedEvents);
+          return dateTimeA - dateTimeB; // Sort in ascending order
+        });
+        setEvents(sortedEvents); // Set sorted events
       } catch (error) {
         console.error("Error fetching events:", error);
       }
