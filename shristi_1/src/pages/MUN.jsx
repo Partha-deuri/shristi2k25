@@ -1,5 +1,5 @@
 // import React from "react";
-import "./MUN.css"; // Optional: Add custom styles for MUN page
+// import "./MUN.css"; // Optional: Add custom styles for MUN page
 
 const MUN = () => {
     return (
