@@ -114,7 +114,9 @@ const IcEventDetails = () => {
         return (
             <div className="bg-gray-900 text-white min-h-screen flex items-center justify-center">
                 <div className="text-center">
-                    <p className="text-2xl font-semibold">Loading event details...</p>
+                    <p className="text-2xl font-semibold">
+                        Loading event details...
+                    </p>
                     <div className="mt-4 animate-spin rounded-full h-12 w-12 border-t-4 border-yellow-500 border-solid"></div>
                 </div>
             </div>
@@ -191,9 +193,11 @@ const IcEventDetails = () => {
                         <strong>Prizes:</strong>{" "}
                         {event.prizes && typeof event.prizes === "string" ? (
                             <ul className="list-disc list-inside text-gray-300">
-                                {event.prizes.split("\n").map((prize, index) => (
-                                    <li key={index}>{prize}</li>
-                                ))}
+                                {event.prizes
+                                    .split("\n")
+                                    .map((prize, index) => (
+                                        <li key={index}>{prize}</li>
+                                    ))}
                             </ul>
                         ) : (
                             "No prizes available"
@@ -334,14 +338,13 @@ const IcEventDetails = () => {
                     <div>
                         <p className="text-lg mb-4">
                             Total Registered Users:{" "}
-                            <strong>
-                                {event?.registrations?.length || 0}
-                            </strong>
+                            <strong>{event?.registrations?.length || 0}</strong>
                         </p>
                         <ul className="list-disc list-inside text-gray-300">
                             {event?.registrations?.map((user, index) => (
                                 <li key={index}>
-                                    {user.name} ({user.email})
+                                    {user.name} ({user.email}){" - "}
+                                    {user.whatsappNumber || "N/A"}
                                 </li>
                             ))}
                         </ul>

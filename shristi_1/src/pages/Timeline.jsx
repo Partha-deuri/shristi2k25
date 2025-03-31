@@ -12,9 +12,11 @@ const Timeline = () => {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL || "http://localhost:5000/api"}/events`
         );
-        const sortedEvents = response.data.sort(
-          (a, b) => new Date(a.date) - new Date(b.date)
-        ); // Sort events by date
+        const sortedEvents = response.data.sort((a, b) => {
+          const dateTimeA = new Date(`${a.date}T${a.time}`);
+          const dateTimeB = new Date(`${b.date}T${b.time}`);
+          return dateTimeA - dateTimeB;
+        }); // Sort events by combined date and time
         setEvents(sortedEvents);
       } catch (error) {
         console.error("Error fetching events:", error);

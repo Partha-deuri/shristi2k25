@@ -60,7 +60,7 @@ const OtpPage = () => {
                         `${
                             import.meta.env.VITE_API_URL ||
                             "http://localhost:5000/api"
-                        }/ic/signup`,
+                        }/incharge/signup`,
                         userData
                     );
                     localStorage.setItem("token", icRes.data.token);
