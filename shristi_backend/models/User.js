@@ -5,12 +5,11 @@ const UserSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  role: { type: String, enum: ["user", "incharge", "admin"], default: "user" },
+  role: { type: String, enum: ["user", "admin"], default: "user" },
   registeredEvents: [{ type: mongoose.Schema.Types.ObjectId, ref: "Event" }],
   notifications: { type: [String], default: [] },
   rollNumber: { type: String, required: true },
-  phoneNumber: { type: String, required: true },
-  whatsappNumber: { type: String, required: true },
+  whatsappNumber: { type: String, required: true, unique:true },
   isNeristian: { type: Boolean, default: false },
   department: { type: String },
   year: { type: String },
@@ -21,6 +20,12 @@ UserSchema.pre('save', async function (next) {
   if (this.isModified('password')) {
     this.password = await bcrypt.hash(this.password, 10);
   }
+  next();
+});
+
+// Middleware to ensure unique events in registeredEvents
+UserSchema.pre('save', function (next) {
+  this.registeredEvents = [...new Set(this.registeredEvents.map(String))];
   next();
 });
 

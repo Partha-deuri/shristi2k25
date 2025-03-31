@@ -1,4 +1,3 @@
-// import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -19,6 +18,8 @@ import DashboardIC from "./pages/DashboardIC.jsx";
 import TedxNerist from "./pages/TedxNerist.jsx";
 import DepartmentEvents from "./pages/DepartmentEvents.jsx";
 import OtpPage from "./pages/OtpPage.jsx";
+import IcEventDetails from "./pages/IcEventDetails.jsx";
+import ErrorPage from "./pages/ErrorPage";
 
 const App = () => {
     return (
@@ -47,6 +48,8 @@ const App = () => {
                 <Route path="/ic/signup" element={<SignupIncharge />} />
                 <Route path="/ic/login" element={<LoginIncharge />} />
                 <Route path="/ic/dashboard" element={<DashboardIC />} />
+                <Route path="/ic/event/:id" element={<IcEventDetails />} />
+                <Route path="/*" element={<ErrorPage />} />
             </Routes>
             <Footer />
         </Router>

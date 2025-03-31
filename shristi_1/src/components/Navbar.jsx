@@ -6,6 +6,7 @@ import logo from "/logo_circle.png"; // Import the logo
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [user, setUser] = useState(null);
+    // const navigate = useNavigate();
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -13,6 +14,7 @@ const Navbar = () => {
         }, 5000);
 
         return () => clearInterval(interval); // Cleanup on unmount
+         
     }, []);
 
     const checkloggedin = async () => {
@@ -34,13 +36,19 @@ const Navbar = () => {
             }
         } catch (err) {
             console.error(err);
+            if (err.response && err.response.status === 400) {
+                setUser(null); // Clear user on unauthorized error
+                localStorage.removeItem("token");
+            }
+            // navigate("/login"); // Redirect to login on error
         }
     };
     return (
         <nav className="fixed top-0 left-0 w-full bg-gradient-to-r from-indigo-800 via-purple-700 to-indigo-800 text-white shadow-lg z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
                 <Link to="/" className="flex items-center text-2xl font-bold">
-                    <img src={logo} alt="Shristi Logo" className="h-10 mr-2" /> {/* Add logo */}
+                    <img src={logo} alt="Shristi Logo" className="h-10 mr-2" />{" "}
+                    {/* Add logo */}
                     Shristi
                 </Link>
 
@@ -95,7 +103,9 @@ const Navbar = () => {
                         Developers
                     </Link>
                     <Link
-                        to="/tedxnerist"
+                        to="https://tedxnerist.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="block py-2 px-4 bg-transparent rounded-lg border-2 border-red-600 hover:bg-red-500 hover:scale-105 transition-transform"
                     >
                         TEDxNERIST

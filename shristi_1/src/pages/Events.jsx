@@ -8,19 +8,19 @@ const Events = () => {
   // Dummy data for departments
   const departments = [
     {
-      id: 1,
+      id: "CSE",
       name: "Computer Science",
       description: "Explore the world of algorithms, coding, and AI.",
       image: "/demo_2.jpg",
     },
     {
-      id: 2,
+      id: "ECE",
       name: "Electronics",
       description: "Dive into circuits, microcontrollers, and IoT.",
       image: "/demo_2.jpg",
     },
     {
-      id: 3,
+      id: "ME",
       name: "Mechanical",
       description: "Discover the art of machines and robotics.",
       image: "/demo_2.jpg",

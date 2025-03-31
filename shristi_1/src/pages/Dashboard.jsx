@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
-    FaUser,
     FaCalendarAlt,
     FaBell,
     FaSignOutAlt,
-    FaCog,
 } from "react-icons/fa";
 import axios from "axios";
 
 const Dashboard = () => {
     const [user, setUser] = useState(null);
     const [notifications, setNotifications] = useState([]);
+    const [loading, setLoading] = useState(true); // Loading state
+    const [error, setError] = useState(null); // Error state
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -22,6 +22,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setLoading(true);
                 const token = localStorage.getItem("token");
                 if (!token) navigate("/login");
 
@@ -37,7 +38,10 @@ const Dashboard = () => {
                 setUser(userRes.data);
 
                 const notificationsRes = await axios.get(
-                    `${import.meta.env.VITE_API_URL||"http://localhost:5000/api"}/dashboard/notifications`,
+                    `${
+                        import.meta.env.VITE_API_URL ||
+                        "http://localhost:5000/api"
+                    }/dashboard/notifications`,
                     {
                         headers: { Authorization: `Bearer ${token}` },
                     }
@@ -45,6 +49,13 @@ const Dashboard = () => {
                 setNotifications(notificationsRes.data);
             } catch (err) {
                 console.error(err);
+                setError("Failed to fetch dashboard data.");
+            } finally {
+                const ic = localStorage.getItem("incharge");
+                if (ic) {
+                    navigate("/ic/dashboard");
+                } // Redirect to login page on error
+                setLoading(false);
             }
         };
 
@@ -55,6 +66,30 @@ const Dashboard = () => {
         navigate("/login"); // Redirect to login page
     };
 
+    if (loading) {
+        return (
+            <div className="bg-gray-900 text-white min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                    <p className="text-2xl font-semibold">
+                        Loading dashboard...
+                    </p>
+                    <div className="mt-4 animate-spin rounded-full h-12 w-12 border-t-4 border-yellow-500 border-solid"></div>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="bg-gray-900 text-white min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                    <p className="text-2xl font-semibold text-red-500">Error</p>
+                    <p className="mt-2 text-gray-300">{error}</p>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="flex bg-gray-900 text-white min-h-screen pt-16">
             {/* Sidebar (sticky & Full Height) */}
@@ -63,12 +98,12 @@ const Dashboard = () => {
                     Shristi Dashboard
                 </h1>
                 <nav className="space-y-4">
-                    <Link
+                    {/* <Link
                         to="/"
                         className="flex items-center space-x-2 hover:text-yellow-500"
                     >
                         <FaUser /> <span>Profile</span>
-                    </Link>
+                    </Link> */}
                     <Link
                         to="/events"
                         className="flex items-center space-x-2 hover:text-yellow-500"
@@ -81,12 +116,12 @@ const Dashboard = () => {
                     >
                         <FaBell /> <span>Timeline</span>
                     </Link>
-                    <Link
+                    {/* <Link
                         to="/settings"
                         className="flex items-center space-x-2 hover:text-yellow-500"
                     >
                         <FaCog /> <span>Settings</span>
-                    </Link>
+                    </Link> */}
                     <button
                         onClick={handleLogout}
                         className="flex items-center space-x-2 text-red-500 hover:text-red-700 w-full"
@@ -113,14 +148,30 @@ const Dashboard = () => {
                             <ul className="mt-3 space-y-2">
                                 {user?.registeredEvents?.map((event) => (
                                     <li
-                                        key={event.id}
-                                        className="bg-gray-800 p-4 rounded-lg"
+                                        key={event._id}
+                                        className="bg-gray-800 p-4 rounded-lg cursor-pointer hover:bg-gray-700"
+                                        onClick={() =>
+                                            navigate(`/event/${event._id}`)
+                                        } // Navigate to event details page
                                     >
                                         <p className="font-semibold">
                                             {event.name}
                                         </p>
                                         <p className="text-gray-400">
-                                            {event.date}
+                                            <strong>Date:</strong>{" "}
+                                            {new Date(
+                                                event.date
+                                            ).toLocaleDateString()}
+                                        </p>
+                                        <p className="text-gray-400">
+                                            <strong>Time:</strong>{" "}
+                                            {new Date(
+                                                `1970-01-01T${event.time}`
+                                            ).toLocaleTimeString([], {
+                                                hour: "2-digit",
+                                                minute: "2-digit",
+                                                hour12: true,
+                                            })}
                                         </p>
                                     </li>
                                 ))}

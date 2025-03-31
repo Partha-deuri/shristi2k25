@@ -16,12 +16,18 @@ const DashboardIC = () => {
     const [showEventForm, setShowEventForm] = useState(false);
     const [newEvent, setNewEvent] = useState({
         name: "",
-        department: "",
+        department: user?.department,
         description: "",
         date: "",
+        time: "",
         venue: "",
+        rules: "",
+        prizes: "",
+        imagePath: "", // New field for image path
     });
     const [isEditing, setIsEditing] = useState(false);
+    const [loading, setLoading] = useState(true); // Loading state
+    const [error, setError] = useState(null); // Error state
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -34,6 +40,7 @@ const DashboardIC = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setLoading(true);
                 const token = localStorage.getItem("token");
                 if (!token) navigate("/login");
 
@@ -48,33 +55,38 @@ const DashboardIC = () => {
                 );
                 setUser(userRes.data);
 
-                // Replace API call with dummy data
-                const dummyEvents = [
-                    { id: 1, name: "Tech Talk", date: "2023-11-01" },
-                    { id: 2, name: "Workshop on AI", date: "2023-11-05" },
-                    { id: 3, name: "Hackathon", date: "2023-11-10" },
-                ];
-                setEvents(dummyEvents);
+                const eventsRes = await axios.get(
+                    `${
+                        import.meta.env.VITE_API_URL ||
+                        "http://localhost:5000/api"
+                    }/events/department`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
+                );
+                setEvents(eventsRes.data);
             } catch (err) {
                 console.error(err);
+                setError("Failed to fetch dashboard data.");
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchData();
     }, [navigate]);
 
+    useEffect(() => {
+        if (user) {
+            setNewEvent((prevEvent) => ({
+                ...prevEvent,
+                department: user.department,
+            }));
+        }
+    }, [user]);
+
     const handleEventClick = (eventId) => {
-        // Replace API call with dummy data
-        const dummyEventDetails = {
-            id: eventId,
-            name: `Event ${eventId}`,
-            registeredUsers: [
-                { id: 1, name: "John Doe", email: "john@example.com" },
-                { id: 2, name: "Jane Smith", email: "jane@example.com" },
-                { id: 3, name: "Alice Johnson", email: "alice@example.com" },
-            ],
-        };
-        setSelectedEvent(dummyEventDetails);
+        navigate(`/ic/event/${eventId}`);
     };
 
     const handleInputChange = (e) => {
@@ -82,26 +94,50 @@ const DashboardIC = () => {
         setNewEvent({ ...newEvent, [name]: value });
     };
 
-    const handleSubmitEvent = () => {
-        const eventToAdd = {
-            ...newEvent,
-            id: events.length + 1,
-            registrations: [],
-            notifications: [],
-        };
-        setEvents([...events, eventToAdd]);
-        setShowEventForm(false);
-        setNewEvent({
-            name: "",
-            department: "",
-            description: "",
-            date: "",
-            venue: "",
-        });
+    const handleSubmitEvent = async () => {
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) navigate("/login");
+
+            const eventToAdd = {
+                ...newEvent,
+                imagePath: newEvent.imagePath || "/SHRISTI_w_border.png", // Default image path
+                registrations: [],
+                notifications: [],
+            };
+
+            const res = await axios.post(
+                `${
+                    import.meta.env.VITE_API_URL ||
+                    "http://localhost:5000/api"
+                }/events`,
+                eventToAdd,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+
+            setEvents([...events, res.data]);
+            setShowEventForm(false);
+            setNewEvent({
+                name: "",
+                department: user?.department,
+                description: "",
+                date: "",
+                time: "",
+                venue: "",
+                rules: "",
+                prizes: "",
+                imagePath: "", // New field for image path
+            });
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     const handleLogout = () => {
         localStorage.removeItem("token");
+        localStorage.removeItem("incharge");
         navigate("/login");
     };
 
@@ -130,33 +166,76 @@ const DashboardIC = () => {
             department: selectedEvent.department,
             description: selectedEvent.description,
             date: selectedEvent.date,
+            time: selectedEvent.time,
             venue: selectedEvent.venue,
+            rules: selectedEvent.rules,
+            prizes: selectedEvent.prizes,
+            imagePath: selectedEvent.imagePath, // New field for image path
         });
         setIsEditing(true);
     };
 
-    const handleSaveEdit = () => {
-        const updatedEvents = events.map((event) =>
-            event.id === selectedEvent.id
-                ? { ...event, ...newEvent }
-                : event
-        );
-        setEvents(updatedEvents);
-        setSelectedEvent({ ...selectedEvent, ...newEvent });
-        setIsEditing(false);
+    const handleSaveEdit = async () => {
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) navigate("/login");
+
+            const updatedEvent = {
+                ...newEvent,
+                imagePath: newEvent.imagePath || "/SHRISTI_w_border.png", // Default image path
+            };
+
+            const res = await axios.put(
+                `${
+                    import.meta.env.VITE_API_URL ||
+                    "http://localhost:5000/api"
+                }/events/${selectedEvent._id}`,
+                updatedEvent,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+
+            const updatedEvents = events.map((event) =>
+                event._id === selectedEvent._id ? res.data : event
+            );
+            setEvents(updatedEvents);
+            setSelectedEvent(res.data);
+            setIsEditing(false);
+        } catch (err) {
+            console.error(err);
+        }
     };
 
-    const handleToggleRegistrations = () => {
-        const updatedEvents = events.map((event) =>
-            event.id === selectedEvent.id
-                ? { ...event, registrationsClosed: !event.registrationsClosed }
-                : event
-        );
-        setEvents(updatedEvents);
-        setSelectedEvent({
-            ...selectedEvent,
-            registrationsClosed: !selectedEvent.registrationsClosed,
-        });
+    const handleToggleRegistrations = async () => {
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) navigate("/login");
+
+            const updatedEvent = {
+                ...selectedEvent,
+                registrationsClosed: !selectedEvent.registrationsClosed,
+            };
+
+            const res = await axios.put(
+                `${
+                    import.meta.env.VITE_API_URL ||
+                    "http://localhost:5000/api"
+                }/events/${selectedEvent._id}`,
+                updatedEvent,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+
+            const updatedEvents = events.map((event) =>
+                event._id === selectedEvent._id ? res.data : event
+            );
+            setEvents(updatedEvents);
+            setSelectedEvent(res.data);
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     useEffect(() => {
@@ -170,6 +249,28 @@ const DashboardIC = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedEvent]);
 
+    if (loading) {
+        return (
+            <div className="bg-gray-900 text-white min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                    <p className="text-2xl font-semibold">Loading dashboard...</p>
+                    <div className="mt-4 animate-spin rounded-full h-12 w-12 border-t-4 border-yellow-500 border-solid"></div>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="bg-gray-900 text-white min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                    <p className="text-2xl font-semibold text-red-500">Error</p>
+                    <p className="mt-2 text-gray-300">{error}</p>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="flex bg-gray-900 text-white min-h-screen pt-16">
             {/* Sidebar (sticky & Full Height) */}
@@ -178,12 +279,12 @@ const DashboardIC = () => {
                     Shristi Dashboard
                 </h1>
                 <nav className="space-y-4">
-                    <Link
+                    {/* <Link
                         to="/"
                         className="flex items-center space-x-2 hover:text-yellow-500"
                     >
                         <FaUser /> <span>Profile</span>
-                    </Link>
+                    </Link> */}
                     <Link
                         to="/events"
                         className="flex items-center space-x-2 hover:text-yellow-500"
@@ -196,12 +297,12 @@ const DashboardIC = () => {
                     >
                         <FaBell /> <span>Timeline</span>
                     </Link>
-                    <Link
+                    {/* <Link
                         to="/settings"
                         className="flex items-center space-x-2 hover:text-yellow-500"
                     >
                         <FaCog /> <span>Settings</span>
-                    </Link>
+                    </Link> */}
                     <button
                         onClick={handleLogout}
                         className="flex items-center space-x-2 text-red-500 hover:text-red-700 w-full"
@@ -260,9 +361,9 @@ const DashboardIC = () => {
                                         type="text"
                                         name="department"
                                         placeholder="Department"
-                                        value={newEvent.department}
-                                        onChange={handleInputChange}
-                                        className="w-full p-2 rounded bg-gray-700 text-white"
+                                        value={user.department}
+                                        className="w-full p-2 rounded bg-gray-700 text-white cursor-not-allowed"
+                                        disabled
                                     />
                                     <textarea
                                         name="description"
@@ -276,13 +377,42 @@ const DashboardIC = () => {
                                         name="date"
                                         value={newEvent.date}
                                         onChange={handleInputChange}
-                                        className="w-full p-2 rounded bg-gray-700 text-white"
+                                        className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                                    />
+                                    <input
+                                        type="time"
+                                        name="time"
+                                        value={newEvent.time}
+                                        onChange={handleInputChange}
+                                        className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-yellow-500"
                                     />
                                     <input
                                         type="text"
                                         name="venue"
                                         placeholder="Venue"
                                         value={newEvent.venue}
+                                        onChange={handleInputChange}
+                                        className="w-full p-2 rounded bg-gray-700 text-white"
+                                    />
+                                    <textarea
+                                        name="rules"
+                                        placeholder="Rules"
+                                        value={newEvent.rules}
+                                        onChange={handleInputChange}
+                                        className="w-full p-2 rounded bg-gray-700 text-white"
+                                    />
+                                    <textarea
+                                        name="prizes"
+                                        placeholder="Prizes"
+                                        value={newEvent.prizes}
+                                        onChange={handleInputChange}
+                                        className="w-full p-2 rounded bg-gray-700 text-white"
+                                    />
+                                    <input
+                                        type="text"
+                                        name="imagePath"
+                                        placeholder="Image Path"
+                                        value={newEvent.imagePath}
                                         onChange={handleInputChange}
                                         className="w-full p-2 rounded bg-gray-700 text-white"
                                     />
@@ -305,18 +435,26 @@ const DashboardIC = () => {
                                 </form>
                             </div>
                         )}
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                             {events.map((event) => (
                                 <div
-                                    key={event.id}
-                                    className="bg-gray-800 p-4 rounded-lg cursor-pointer hover:bg-gray-700"
-                                    onClick={() => handleEventClick(event.id)}
+                                    key={event._id}
+                                    className="bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+                                    onClick={() => handleEventClick(event._id)}
                                 >
-                                    <h4 className="text-xl font-bold">
-                                        {event.name}
-                                    </h4>
+                                    <h4 className="text-xl font-bold text-yellow-500">{event.name}</h4>
+                                    {event.imagePath && (
+                                        <img
+                                            src={event.imagePath}
+                                            alt={event.name}
+                                            className="w-full h-40 object-cover rounded-lg mt-4"
+                                        />
+                                    )}
+                                    <p className="text-gray-400 mt-2">
+                                        <span className="font-semibold">Date:</span> {new Date(event.date).toLocaleDateString()}
+                                    </p>
                                     <p className="text-gray-400">
-                                        {event.date}
+                                        <span className="font-semibold">Time:</span> {new Date(`1970-01-01T${event.time}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
                                     </p>
                                 </div>
                             ))}
@@ -325,18 +463,29 @@ const DashboardIC = () => {
 
                     {/* Selected Event Details */}
                     {selectedEvent && (
-                        <section className="mt-6">
+                        <section className="mt-8 bg-gray-800 p-8 rounded-lg shadow-lg">
                             <h3 className="text-2xl font-semibold text-yellow-500">
                                 {selectedEvent.name} - Registered Users
                             </h3>
-                            <p className="text-gray-400">
-                                Total Registered:{" "}
-                                {selectedEvent.registeredUsers.length}
+                            <p className="text-gray-400 mt-2">
+                                <span className="font-semibold">Date:</span> {new Date(selectedEvent.date).toLocaleDateString()}
                             </p>
-                            <p className="text-gray-400">Department: {selectedEvent.department}</p>
-                            <p className="text-gray-400">Description: {selectedEvent.description}</p>
-                            <p className="text-gray-400">Date: {selectedEvent.date}</p>
-                            <p className="text-gray-400">Venue: {selectedEvent.venue}</p>
+                            <p className="text-gray-400">
+                                <span className="font-semibold">Time:</span> {new Date(`1970-01-01T${selectedEvent.time}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+                            </p>
+                            <p className="text-gray-400">
+                                <span className="font-semibold">Venue:</span> {selectedEvent.venue}
+                            </p>
+                            <p className="text-gray-400">
+                                <span className="font-semibold">Description:</span> {selectedEvent.description}
+                            </p>
+                            {selectedEvent.imagePath && (
+                                <img
+                                    src={selectedEvent.imagePath}
+                                    alt={selectedEvent.name}
+                                    className="w-full h-48 object-cover rounded-lg mt-4"
+                                />
+                            )}
                             {selectedEvent.registrationsClosed && (
                                 <p className="text-red-500 font-bold mt-2">
                                     Registrations are closed for this event.
@@ -384,7 +533,8 @@ const DashboardIC = () => {
                                             placeholder="Department"
                                             value={newEvent.department}
                                             onChange={handleInputChange}
-                                            className="w-full p-2 rounded bg-gray-700 text-white"
+                                            className="w-full p-2 rounded bg-gray-700 text-white cursor-not-allowed"
+                                            disabled
                                         />
                                         <textarea
                                             name="description"
@@ -398,13 +548,42 @@ const DashboardIC = () => {
                                             name="date"
                                             value={newEvent.date}
                                             onChange={handleInputChange}
-                                            className="w-full p-2 rounded bg-gray-700 text-white"
+                                            className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                                        />
+                                        <input
+                                            type="time"
+                                            name="time"
+                                            value={newEvent.time}
+                                            onChange={handleInputChange}
+                                            className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-yellow-500"
                                         />
                                         <input
                                             type="text"
                                             name="venue"
                                             placeholder="Venue"
                                             value={newEvent.venue}
+                                            onChange={handleInputChange}
+                                            className="w-full p-2 rounded bg-gray-700 text-white"
+                                        />
+                                        <textarea
+                                            name="rules"
+                                            placeholder="Rules"
+                                            value={newEvent.rules}
+                                            onChange={handleInputChange}
+                                            className="w-full p-2 rounded bg-gray-700 text-white"
+                                        />
+                                        <textarea
+                                            name="prizes"
+                                            placeholder="Prizes"
+                                            value={newEvent.prizes}
+                                            onChange={handleInputChange}
+                                            className="w-full p-2 rounded bg-gray-700 text-white"
+                                        />
+                                        <input
+                                            type="text"
+                                            name="imagePath"
+                                            placeholder="Image Path"
+                                            value={newEvent.imagePath}
                                             onChange={handleInputChange}
                                             className="w-full p-2 rounded bg-gray-700 text-white"
                                         />
@@ -428,16 +607,16 @@ const DashboardIC = () => {
                                 </div>
                             )}
                             <ul className="mt-3 space-y-2">
-                                {selectedEvent.registeredUsers.map((user) => (
+                                {selectedEvent.registeredUsers?.map((users) => (
                                     <li
-                                        key={user.id}
+                                        key={users._id} // Ensure the key is unique
                                         className="bg-gray-800 p-4 rounded-lg"
                                     >
                                         <p className="font-semibold">
-                                            {user.name}
+                                            {users.name}
                                         </p>
                                         <p className="text-gray-400">
-                                            {user.email}
+                                            {users.email}
                                         </p>
                                     </li>
                                 ))}

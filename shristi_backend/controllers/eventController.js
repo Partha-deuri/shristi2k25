@@ -1,8 +1,10 @@
 const Event = require('../models/Event');
+const Incharge = require('../models/Incharge');
+const User = require('../models/User');
 
 exports.getEvents = async (req, res) => {
   try {
-    const events = await Event.find();
+    const events = await Event.find().select('-registrations -notifications');
     res.json(events);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -11,10 +13,20 @@ exports.getEvents = async (req, res) => {
 
 exports.getDepartmentWiseEvents = async (req, res) => {
   try {
-      const events = await Event.find({ department: req.params.department });
-      res.json(events);
+    const events = await Event.find({ department: req.params.dept }).select('-registrations -notifications');;
+    res.json(events);
   } catch (error) {
-      res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error" });
+  }
+};
+exports.getDepartmentWiseEventsIC = async (req, res) => {
+  try {
+    const incharge = await Incharge.findById(req.user.id);
+    if (!incharge) return res.status(404).json({ message: 'Incharge not found' });
+    const events = await Event.find({ department: incharge.department });
+    res.json(events);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -32,9 +44,21 @@ exports.registerForEvent = async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);
     if (!event) return res.status(404).json({ message: 'Event not found' });
-
-    event.registrations.push(req.user.id);
+    
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    
+    // Check if the user is already registered
+    if (event.registrations.includes(user._id)) {
+      return res.status(400).json({ message: 'User already registered for this event' });
+    }
+    
+    event.registrations.push(user._id);
+    user.registeredEvents.push(event._id);
+    
     await event.save();
+    await user.save();
+
     res.json({ message: 'Registered successfully' });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -43,15 +67,34 @@ exports.registerForEvent = async (req, res) => {
 
 exports.updateEvent = async (req, res) => {
   try {
-    const event = await Event.findById(req.params.id);
+    const event = await Event.findById(req.params.id).populate('registrations');
     if (!event) return res.status(404).json({ message: 'Event not found' });
 
-    const { date, venue } = req.body;
-    if (date && event.date !== date) {
-      event.notifications.push({ message: `Event date changed to ${new Date(date).toLocaleDateString()}` });
+    const { date, time, venue } = req.body;
+    const notifications = [];
+
+    if (date && event.date.toISOString().split('T')[0] !== date) {
+      const message = `Event "${event.name}" date changed to ${new Date(date).toLocaleDateString()}`;
+      event.notifications.push({ message });
+      notifications.push(message);
+    }
+    if (time && event.time !== time) {
+      const message = `Event "${event.name}" time changed to ${time}`;
+      event.notifications.push({ message });
+      notifications.push(message);
     }
     if (venue && event.venue !== venue) {
-      event.notifications.push({ message: `Event venue changed to ${venue}` });
+      const message = `Event "${event.name}" venue changed to ${venue}`;
+      event.notifications.push({ message });
+      notifications.push(message);
+    }
+
+    // Push notifications to registered users
+    if (notifications.length > 0) {
+      for (const user of event.registrations) {
+        user.notifications.push(...notifications);
+        await user.save();
+      }
     }
 
     Object.assign(event, req.body);
@@ -66,6 +109,38 @@ exports.deleteEvent = async (req, res) => {
   try {
     await Event.findByIdAndDelete(req.params.id);
     res.json({ message: 'Event deleted' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.getEventById = async (req, res) => {
+  try {
+    const event = await Event.findById(req.params.id).populate('registrations', 'name email');
+    if (!event) return res.status(404).json({ message: 'Event not found' });
+    res.json(event);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.getEventByIdPublic = async (req, res) => {
+  try {
+    const event = await Event.findById(req.params.id).select('-registrations -notifications');
+    if (!event) return res.status(404).json({ message: 'Event not found' });
+    res.json(event);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.isRegistered = async (req, res) => {
+  try {
+    const event = await Event.findById(req.params.id);
+    if (!event) return res.status(404).json({ message: 'Event not found' });
+
+    const isRegistered = event.registrations.includes(req.user.id);
+    res.json({ isRegistered });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
