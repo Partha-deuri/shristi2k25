@@ -1,25 +1,93 @@
 [
   {
-    "name": "Hackathon",
-    "department": "CSE",
-    "description": "A competitive coding event to test your problem-solving skills.",
-    "date": "2025-12-01",
-    "time": "10:00 AM",
-    "venue": "CSE Seminal Hall",
+    "name": "Road Rampage Rally",
+    "department": "ME",
+    "description": "N/A",
+    "date": "2025-04-09",
+    "time": "01:00 PM",
+    "venue": "Football Ground",
     "registrations": [],
     "notifications": [
-      {
-        "message": "Registration is now open!",
-        "createdAt": "2023-11-01T10:00:00Z"
-      }
+      
+    ],
+    "registrationsClosed": false,
+    "imagePath": "/me/road_rampage_rally.jpg",
+    "rules": [
+      
+    ],
+    "prizes": "N/A"
+  },
+  {
+    "name": "Thermo Thrill Regatta",
+    "department": "ME",
+    "description": "N/A",
+    "date": "2025-04-06",
+    "time": "12:00 PM",
+    "venue": "Near Civil Department",
+    "registrations": [],
+    "notifications": [
+      
+    ],
+    "registrationsClosed": false,
+    "imagePath": "/me/thermo_thrill_regatta.jpg",
+    "rules": [
+      
+    ],
+    "prizes": "N/A"
+  },
+  {
+    "name": "Thermo Thrill Regatta",
+    "department": "ME",
+    "description": "N/A",
+    "date": "2025-04-06",
+    "time": "12:00 PM",
+    "venue": "Near Civil Department",
+    "registrations": [],
+    "notifications": [
+      
+    ],
+    "registrationsClosed": false,
+    "imagePath": "/me/thermo_thrill_regatta.jpg",
+    "rules": [
+      
+    ],
+    "prizes": "N/A"
+  },
+  {
+    "name": "Mechano Mind Master",
+    "department": "ME",
+    "description": "N/A",
+    "date": "2025-04-04",
+    "time": "05:00 PM",
+    "venue": "Academic Room No. 1",
+    "registrations": [],
+    "notifications": [
+      
+    ],
+    "registrationsClosed": false,
+    "imagePath": "/me/mechano_mind_master.jpg",
+    "rules": [
+      
+    ],
+    "prizes": "N/A"
+  },
+  
+  {
+    "name": "Skyward Sling",
+    "department": "ME",
+    "description": "N/A",
+    "date": "2025-04-12",
+    "time": "10:30 AM",
+    "venue": "Football Ground",
+    "registrations": [],
+    "notifications": [
+      
     ],
     "registrationsClosed": false,
     "imagePath": "",
     "rules": [
-      "Participants must bring their own laptops.",
-      "Internet access will be provided.",
-      "No external help is allowed."
+      
     ],
-    "prizes": "Winner: $500, Runner-up: $300"
+    "prizes": "Prize Pool Rs. 9000"
   }
 ]
