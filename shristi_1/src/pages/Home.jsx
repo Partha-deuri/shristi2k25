@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ThreeScene from "../components/ThreeScene";
-import Footer from "../components/Footer"; // Import Footer
 
 const Home = () => {
   const targetDate = new Date("2025-04-09T00:00:00");
@@ -126,9 +125,6 @@ const Home = () => {
         </section>
 
       </main>
-
-      {/* Footer */}
-      <Footer /> {/* Ensure Footer is rendered on top */}
     </div>
   );
 };
