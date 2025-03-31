@@ -11,7 +11,7 @@ const InchargeSchema = new mongoose.Schema({
   },
   password: { type: String, required: true },
   role: { type: String, enum: ["incharge", "admin"], default: "incharge" },
-  department: { type: String, enum: ["CSE", "ECE", "EE", "AE", "ME", "CE"], required: true },
+  department: { type: String, enum: ["CSE", "ECE", "EE", "AE", "ME", "CE","FO","MBA","Techno"], required: true },
   phoneNumber: { 
     type: String, 
     required: true, 
