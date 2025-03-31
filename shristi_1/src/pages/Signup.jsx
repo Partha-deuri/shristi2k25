@@ -230,7 +230,7 @@ const Signup = () => {
                                     <option value="ME">ME</option>
                                     <option value="CE">CE</option>
                                     <option value="FO">FO</option>
-                                    <option value="MBA">MBA</option>
+                                    <option value="CMS">CMS</option>
                                 </select>
                             </div>
                             <div>

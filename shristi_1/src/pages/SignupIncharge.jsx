@@ -169,7 +169,7 @@ const SignupIncharge = () => {
                             <option value="ME">ME</option>
                             <option value="CE">CE</option>
                             <option value="FO">FO</option>
-                            <option value="MBA">MBA</option>
+                            <option value="CMS">CMS</option>
                             <option value="Techno">Techno</option>
                         </select>
                     </div>

@@ -4,21 +4,6 @@ const sponsors = [
     logo: "/images/google.png",
     website: "https://www.google.com",
   },
-  {
-    name: "Microsoft",
-    logo: "/images/microsoft.png",
-    website: "https://www.microsoft.com",
-  },
-  {
-    name: "Amazon Web Services",
-    logo: "/images/aws.png",
-    website: "https://aws.amazon.com",
-  },
-  {
-    name: "Tesla",
-    logo: "/images/tesla.png",
-    website: "https://www.tesla.com",
-  },
 ];
 
 const Sponsors = () => {

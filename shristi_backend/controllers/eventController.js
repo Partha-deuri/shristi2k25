@@ -4,7 +4,9 @@ const User = require('../models/User');
 
 exports.getEvents = async (req, res) => {
   try {
-    const events = await Event.find().select('-registrations -notifications');
+    const events = await Event.find()
+      .select('-registrations -notifications')
+      .sort({ date: 1, time: 1 }); // First sort by date, then by time for the same date
     res.json(events);
   } catch (err) {
     res.status(500).json({ message: err.message });

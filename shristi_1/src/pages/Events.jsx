@@ -10,7 +10,7 @@ const Events = () => {
     {
       id: "Techno",
       name: "Techno",
-      description: "Explore the world of algorithms, coding, and AI.",
+      description: "",
       image: "/demo_2.jpg",
     },
     {
@@ -56,8 +56,8 @@ const Events = () => {
       image: "/demo_2.jpg",
     },
     {
-      id: "MBA",
-      name: "Management",
+      id: "CMS",
+      name: "Center of Management Studies",
       description: "Master the art of business and leadership.",
       image: "/demo_2.jpg",
     },

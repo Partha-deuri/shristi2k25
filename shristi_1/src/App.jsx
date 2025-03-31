@@ -23,6 +23,7 @@ import DepartmentEvents from "./pages/DepartmentEvents.jsx";
 import OtpPage from "./pages/OtpPage.jsx";
 import IcEventDetails from "./pages/IcEventDetails.jsx";
 import ErrorPage from "./pages/ErrorPage";
+import MUN from "./pages/MUN"; // Import MUN page
 
 class ErrorBoundary extends React.Component {
     constructor(props) {
@@ -88,6 +89,7 @@ const App = () => {
                     <Route path="/ic/login" element={<LoginIncharge />} />
                     <Route path="/ic/dashboard" element={<DashboardIC />} />
                     <Route path="/ic/event/:id" element={<IcEventDetails />} />
+                    <Route path="/mun" element={<MUN />} /> {/* Add MUN route */}
                     <Route path="/*" element={<ErrorPage />} />
                 </Routes>
                 <Footer />
