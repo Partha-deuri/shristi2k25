@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LoginIncharge = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errors, setErrors] = useState({});
+    const [backendError, setBackendError] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -22,6 +26,8 @@ const LoginIncharge = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setErrors({});
+        setBackendError(""); // Clear previous backend error
         try {
             const res = await axios.post(
                 `${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/incharge/login`,
@@ -32,6 +38,9 @@ const LoginIncharge = () => {
             navigate("/ic/dashboard");
         } catch (err) {
             console.error(err);
+            const errorMessage = err.response?.data?.message || "An error occurred. Please try again.";
+            setBackendError(errorMessage);
+            toast.error(errorMessage); // Show toast notification
         }
     };
 
@@ -41,6 +50,9 @@ const LoginIncharge = () => {
                 <h2 className="text-4xl font-extrabold text-center mb-6 text-yellow-500">
                     Login to Shristi Incharges
                 </h2>
+                {backendError && (
+                    <p className="text-red-500 text-center mb-4">{backendError}</p>
+                )}
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Email Input */}
                     <div>
@@ -53,6 +65,9 @@ const LoginIncharge = () => {
                             onChange={(e) => setEmail(e.target.value)}
                             required
                         />
+                        {errors.email && (
+                            <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                        )}
                     </div>
 
                     {/* Password Input */}
@@ -66,6 +81,9 @@ const LoginIncharge = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             required
                         />
+                        {errors.password && (
+                            <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+                        )}
                     </div>
 
                     {/* Login Button */}

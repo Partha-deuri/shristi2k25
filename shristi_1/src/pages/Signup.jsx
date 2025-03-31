@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
     const [name, setName] = useState("");
@@ -12,6 +14,8 @@ const Signup = () => {
     const [department, setDepartment] = useState("");
     const [rollNumber, setRollNumber] = useState("");
     const [year, setYear] = useState("");
+    const [errors, setErrors] = useState({});
+    const [backendError, setBackendError] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -29,51 +33,53 @@ const Signup = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const newErrors = {};
+
         if (password !== confirmPassword) {
-            alert("Passwords do not match!");
-            return;
+            newErrors.confirmPassword = "Passwords do not match!";
         }
-        if (whatsappNumber.length < 10) {
-            alert("WhatsApp number must be at least 10 digits!");
-            return;
+        if (whatsappNumber.length !== 10) {
+            newErrors.whatsappNumber = "WhatsApp number must be exactly 10 digits!";
         }
 
-        // Set default values for non-NERISTIAN users
-        const finalDepartment = isNeristian ? department : "N/A";
-        const finalRollNumber = isNeristian ? rollNumber : "N/A";
-        const finalYear = isNeristian ? year : "N/A";
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
 
-        console.log(
-            "Signing up with:",
-            name,
-            email,
-            password,
-            whatsappNumber,
-            isNeristian ? { department: finalDepartment, rollNumber: finalRollNumber, year: finalYear } : {}
-        );
-
+        setErrors({});
+        setBackendError(""); // Clear previous backend error
         try {
-            const res = await axios.post(
+            // Send email to backend to generate OTP
+            const res = await axios.get(
                 `${
                     import.meta.env.VITE_API_URL || "http://localhost:5000/api"
-                }/auth/signup`,
-                {
-                    name,
-                    email,
-                    password,
-                    whatsappNumber,
-                    isNeristian,
-                    department: finalDepartment,
-                    rollNumber: finalRollNumber,
-                    year: finalYear,
-                }
+                }/mail/email/${email}`
             );
-            localStorage.setItem("token", res.data.token);
-            navigate("/dashboard");
+            // console.log(res.data);
+            navigate("/verify/otp", {
+                state: {
+                    email,
+                    otpId: res.data.otpId,
+                    userData: {
+                        name,
+                        email,
+                        password,
+                        whatsappNumber,
+                        isNeristian,
+                        department: isNeristian ? department : "N/A",
+                        rollNumber: isNeristian ? rollNumber : "N/A",
+                        year: isNeristian ? year : "N/A",
+                        role: "user"
+                    },
+                },
+            });
         } catch (err) {
             console.error(err);
+            const errorMessage = err.response?.data?.message || "An error occurred. Please try again.";
+            setBackendError(errorMessage);
+            toast.error(errorMessage); // Show toast notification
         }
-        // Add authentication logic here
     };
 
     return (
@@ -82,10 +88,15 @@ const Signup = () => {
                 <h2 className="text-4xl font-extrabold text-center mb-6 text-yellow-500">
                     Create an Account
                 </h2>
+                {backendError && (
+                    <p className="text-red-500 text-center mb-4">{backendError}</p>
+                )}
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Name Input */}
                     <div>
-                        <label className="block text-gray-400 font-medium">Full Name</label>
+                        <label className="block text-gray-400 font-medium">
+                            Full Name
+                        </label>
                         <input
                             type="text"
                             className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none text-gray-200 placeholder-gray-500"
@@ -94,11 +105,16 @@ const Signup = () => {
                             onChange={(e) => setName(e.target.value)}
                             required
                         />
+                        {errors.name && (
+                            <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+                        )}
                     </div>
 
                     {/* Email Input */}
                     <div>
-                        <label className="block text-gray-400 font-medium">Email</label>
+                        <label className="block text-gray-400 font-medium">
+                            Email
+                        </label>
                         <input
                             type="email"
                             className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none text-gray-200 placeholder-gray-500"
@@ -140,6 +156,9 @@ const Signup = () => {
                                 }
                                 required
                             />
+                            {errors.confirmPassword && (
+                                <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>
+                            )}
                         </div>
                     </div>
 
@@ -161,22 +180,24 @@ const Signup = () => {
                             }}
                             required
                         />
-                        {whatsappNumber && whatsappNumber.length != 10 && (
-                            <p className="text-red-500 text-sm mt-1">
-                                WhatsApp number must be 10 digits.
-                            </p>
+                        {errors.whatsappNumber && (
+                            <p className="text-red-500 text-sm mt-1">{errors.whatsappNumber}</p>
                         )}
                     </div>
 
                     {/* NERISTIAN Slide Toggle */}
                     <div className="flex items-center justify-between">
-                        <label className="block text-gray-400 font-medium">Are you a NERISTIAN?</label>
+                        <label className="block text-gray-400 font-medium">
+                            Are you a NERISTIAN?
+                        </label>
                         <label className="relative inline-flex items-center cursor-pointer">
                             <input
                                 type="checkbox"
                                 className="sr-only peer"
                                 checked={isNeristian}
-                                onChange={(e) => setIsNeristian(e.target.checked)}
+                                onChange={(e) =>
+                                    setIsNeristian(e.target.checked)
+                                }
                             />
                             <div className="w-11 h-6 bg-gray-700 rounded-full peer-focus:ring-2 peer-focus:ring-yellow-500 peer-checked:bg-yellow-500 transition-colors">
                                 <span
@@ -195,16 +216,22 @@ const Signup = () => {
                                 <label className="block text-gray-400 font-medium">
                                     Department
                                 </label>
-                                <input
-                                    type="text"
-                                    className="w-full px-4 py-2 mt-1 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none text-gray-200 placeholder-gray-500"
-                                    placeholder="Enter your department"
+                                <select
+                                    className="w-full px-4 py-2 mt-1 pr-8 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none appearance-none text-gray-200"
                                     value={department}
-                                    onChange={(e) =>
-                                        setDepartment(e.target.value)
-                                    }
+                                    onChange={(e) => setDepartment(e.target.value)}
                                     required
-                                />
+                                >
+                                    <option value="" disabled>Select your department</option>
+                                    <option value="CSE">CSE</option>
+                                    <option value="ECE">ECE</option>
+                                    <option value="EE">EE</option>
+                                    <option value="AE">AE</option>
+                                    <option value="ME">ME</option>
+                                    <option value="CE">CE</option>
+                                    <option value="FO">FO</option>
+                                    <option value="MBA">MBA</option>
+                                </select>
                             </div>
                             <div>
                                 <label className="block text-gray-400 font-medium">

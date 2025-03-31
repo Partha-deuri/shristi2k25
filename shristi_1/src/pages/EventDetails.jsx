@@ -1,6 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify"; // Import toast
+import "react-toastify/dist/ReactToastify.css"; // Import styles for toast
 
 const EventDetails = () => {
     const { id } = useParams();
@@ -48,7 +50,7 @@ const EventDetails = () => {
         try {
             const token = localStorage.getItem("token");
             if (!token) {
-                alert("Please log in to register for the event.");
+                toast.warn("Please log in to register for the event."); // Replace alert
                 navigate("/login"); // Redirect to login page
                 return;
             }
@@ -61,13 +63,13 @@ const EventDetails = () => {
             );
             console.log(response);
             if (response.status === 200) {
-                alert("Registered successfully!");
+                toast.success("Registered successfully!"); // Replace alert
                 setIsRegistered(true); // Update registration status
             } else {
-                alert("Registration failed. Please try again.");
+                toast.error("Registration failed. Please try again."); // Replace alert
             }
         } catch (err) {
-            alert("Registration failed. Please try again.");
+            toast.error("Registration failed. Please try again."); // Replace alert
             console.log(err); 
         }
     };

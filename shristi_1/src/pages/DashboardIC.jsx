@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
-    FaUser,
     FaCalendarAlt,
     FaBell,
-    FaSignOutAlt,
-    FaCog,
+    FaSignOutAlt
 } from "react-icons/fa";
 import axios from "axios";
 

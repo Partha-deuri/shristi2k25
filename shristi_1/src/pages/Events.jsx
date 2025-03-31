@@ -25,6 +25,36 @@ const Events = () => {
       description: "Discover the art of machines and robotics.",
       image: "/demo_2.jpg",
     },
+    {
+      id: "EE",
+      name: "Electrical",
+      description: "Uncover the mysteries of power systems and electromagnetism.",
+      image: "/demo_2.jpg",
+    },
+    {
+      id: "AE",
+      name: "Agricultural",
+      description: "Soar into the world of aerodynamics and space exploration.",
+      image: "/demo_2.jpg",
+    },
+    {
+      id: "CE",
+      name: "Civil",
+      description: "Build the future with innovative infrastructure and design.",
+      image: "/demo_2.jpg",
+    },
+    {
+      id: "FO",
+      name: "Forestry",
+      description: "Delve into the science of food processing and safety.",
+      image: "/demo_2.jpg",
+    },
+    {
+      id: "MBA",
+      name: "Management",
+      description: "Master the art of business and leadership.",
+      image: "/demo_2.jpg",
+    },
   ];
 
   const handleDepartmentClick = (departmentId) => {

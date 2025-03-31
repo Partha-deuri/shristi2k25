@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import ThreeScene from "../components/ThreeScene";
+import Footer from "../components/Footer"; // Import Footer
 
 const Home = () => {
   const targetDate = new Date("2025-04-09T00:00:00");
@@ -24,12 +26,15 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white min-h-screen flex flex-col">
-      {/* Prevent Navbar Overlap */}
-      <main className="flex-grow pt-16">
+    <div className="relative bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white min-h-screen flex flex-col max-w-full overflow-hidden">
+      {/* Three.js Scene */}
+      <div className="fixed inset-0 z-0">
+        <ThreeScene /> {/* Render Three.js animation as a sticky background */}
+      </div>
 
-        {/* Main Hero Section */}
-        <section className="relative flex flex-col justify-center items-center text-center h-screen bg-cover bg-center bg-[url('/path-to-main-image.jpg')]">
+      {/* Main Hero Section */}
+      <main className="relative z-10 flex-grow pt-16 max-w-full overflow-hidden">
+        <section className="relative flex flex-col justify-center items-center text-center h-screen max-w-full overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-70"></div>
           <div className="relative z-10 px-6 animate-fade-in">
             <h1 className="text-6xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
@@ -57,7 +62,7 @@ const Home = () => {
               <Link to="/events" className="px-6 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg text-lg font-semibold hover:shadow-lg hover:scale-105 transition-transform">
                 Explore Events
               </Link>
-              <Link to="/game" className="px-6 py-3 bg-gradient-to-r from-green-500 to-lime-500 rounded-lg text-lg font-semibold hover:shadow-lg hover:scale-105 transition-transform">
+              <Link to="/game" className="hidden lg:block px-6 py-3 bg-gradient-to-r from-green-500 to-lime-500 rounded-lg text-lg font-semibold hover:shadow-lg hover:scale-105 transition-transform">
                 Play Game
               </Link>
               <Link to="/signup" className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-blue-500 rounded-lg text-lg font-semibold hover:shadow-lg hover:scale-105 transition-transform">
@@ -69,7 +74,7 @@ const Home = () => {
 
         {/* Event Sections */}
         {/* Robo War */}
-        <section className="relative flex flex-col justify-center items-center text-center h-screen bg-cover bg-center bg-[url('/path-to-robowar-image.jpg')]">
+        <section className="relative flex flex-col justify-center items-center text-center h-screen bg-cover bg-center bg-[url('/path-to-robowar-image.jpg')] max-w-full overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-70"></div>
           <div className="relative z-10 px-6 animate-slide-up">
             <h2 className="text-5xl font-bold text-yellow-500 mb-4">Robo War</h2>
@@ -83,7 +88,7 @@ const Home = () => {
         </section>
 
         {/* Treasure Hunt */}
-        <section className="relative flex flex-col justify-center items-center text-center h-screen bg-cover bg-center bg-[url('/path-to-treasurehunt-image.jpg')]">
+        <section className="relative flex flex-col justify-center items-center text-center h-screen bg-cover bg-center bg-[url('/path-to-treasurehunt-image.jpg')] max-w-full overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-70"></div>
           <div className="relative z-10 px-6 animate-slide-up">
             <h2 className="text-5xl font-bold text-yellow-500 mb-4">Treasure Hunt</h2>
@@ -97,7 +102,7 @@ const Home = () => {
         </section>
 
         {/* Hackathon */}
-        <section className="relative flex flex-col justify-center items-center text-center h-screen bg-cover bg-center bg-[url('/path-to-hackathon-image.jpg')]">
+        <section className="relative flex flex-col justify-center items-center text-center h-screen bg-cover bg-center bg-[url('/path-to-hackathon-image.jpg')] max-w-full overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-70"></div>
           <div className="relative z-10 px-6 animate-slide-up">
             <h2 className="text-5xl font-bold text-yellow-500 mb-4">Hackathon</h2>
@@ -111,7 +116,7 @@ const Home = () => {
         </section>
 
         {/* About Section */}
-        <section className="py-16 px-6 text-center max-w-5xl mx-auto">
+        <section className="py-16 px-6 text-center max-w-5xl mx-auto overflow-hidden">
           <h2 className="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">
             About Shristi
           </h2>
@@ -121,6 +126,9 @@ const Home = () => {
         </section>
 
       </main>
+
+      {/* Footer */}
+      <Footer /> {/* Ensure Footer is rendered on top */}
     </div>
   );
 };

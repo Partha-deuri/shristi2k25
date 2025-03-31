@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errors, setErrors] = useState({});
+    const [backendError, setBackendError] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -22,16 +26,20 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setErrors({});
+        setBackendError(""); // Clear previous backend error
         try {
             const res = await axios.post(
                 `${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/login`,
                 { email, password }
             );
-            // console.log(res.data);
             localStorage.setItem("token", res.data.token);
             navigate("/dashboard");
         } catch (err) {
             console.error(err);
+            const errorMessage = err.response?.data?.message || "An error occurred. Please try again.";
+            setBackendError(errorMessage);
+            toast.error(errorMessage); // Show toast notification
         }
     };
 
@@ -44,6 +52,9 @@ const Login = () => {
                 <p className="text-center text-gray-400 mb-6">
                     Please login to continue
                 </p>
+                {backendError && (
+                    <p className="text-red-500 text-center mb-4">{backendError}</p>
+                )}
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Email Input */}
                     <div>
@@ -56,6 +67,9 @@ const Login = () => {
                             onChange={(e) => setEmail(e.target.value)}
                             required
                         />
+                        {errors.email && (
+                            <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                        )}
                     </div>
 
                     {/* Password Input */}
@@ -69,6 +83,9 @@ const Login = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             required
                         />
+                        {errors.password && (
+                            <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+                        )}
                     </div>
 
                     {/* Login Button */}

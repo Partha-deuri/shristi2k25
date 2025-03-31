@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SignupIncharge = () => {
     const [name, setName] = useState("");
@@ -9,6 +11,8 @@ const SignupIncharge = () => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [department, setDepartment] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
+    const [errors, setErrors] = useState({});
+    const [backendError, setBackendError] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -26,22 +30,46 @@ const SignupIncharge = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const newErrors = {};
         if (password !== confirmPassword) {
-            alert("Passwords do not match!");
+            newErrors.confirmPassword = "Passwords do not match!";
+        }
+        if (phoneNumber.length !== 10) {
+            newErrors.phoneNumber = "Phone number must be exactly 10 digits!";
+        }
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
             return;
         }
-        console.log("Signing up with:", name, email, password, department, phoneNumber);
+        setErrors({});
+        setBackendError(""); // Clear previous backend error
         try {
-            const res = await axios.post(
-                `${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/incharge/signup`,
-                { name, email, password, department, phoneNumber, role: "incharge" }
+            // Send email to backend to generate OTP
+            const res = await axios.get(
+                `${
+                    import.meta.env.VITE_API_URL || "http://localhost:5000/api"
+                }/mail/email/${email}`
             );
-            localStorage.setItem("token", res.data.token); localStorage.setItem("incharge", true);
-            navigate("/ic/dashboard");
+            navigate("/verify/otp", {
+                state: {
+                    email,
+                    otpId: res.data.otpId,
+                    userData: {
+                        name,
+                        email,
+                        password,
+                        department,
+                        phoneNumber,
+                        role: "incharge",
+                    },
+                },
+            });
         } catch (err) {
             console.error(err);
+            const errorMessage = err.response?.data?.message || "An error occurred. Please try again.";
+            setBackendError(errorMessage);
+            toast.error(errorMessage); // Show toast notification
         }
-        // Add authentication logic here
     };
 
     return (
@@ -50,6 +78,9 @@ const SignupIncharge = () => {
                 <h2 className="text-4xl font-extrabold text-center mb-6 text-yellow-500">
                     Create a Shristi Incharge Account
                 </h2>
+                {backendError && (
+                    <p className="text-red-500 text-center mb-4">{backendError}</p>
+                )}
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {/* Name Input */}
@@ -63,6 +94,9 @@ const SignupIncharge = () => {
                                 onChange={(e) => setName(e.target.value)}
                                 required
                             />
+                            {errors.name && (
+                                <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+                            )}
                         </div>
 
                         {/* Email Input */}
@@ -76,6 +110,9 @@ const SignupIncharge = () => {
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
+                            {errors.email && (
+                                <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                            )}
                         </div>
                     </div>
 
@@ -91,6 +128,9 @@ const SignupIncharge = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
+                            {errors.password && (
+                                <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+                            )}
                         </div>
 
                         {/* Confirm Password Input */}
@@ -106,6 +146,9 @@ const SignupIncharge = () => {
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 required
                             />
+                            {errors.confirmPassword && (
+                                <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>
+                            )}
                         </div>
                     </div>
 
@@ -125,6 +168,8 @@ const SignupIncharge = () => {
                             <option value="AE">AE</option>
                             <option value="ME">ME</option>
                             <option value="CE">CE</option>
+                            <option value="FO">FO</option>
+                            <option value="MBA">MBA</option>
                         </select>
                     </div>
 
@@ -139,6 +184,9 @@ const SignupIncharge = () => {
                             onChange={(e) => setPhoneNumber(e.target.value)}
                             required
                         />
+                        {errors.phoneNumber && (
+                            <p className="text-red-500 text-sm mt-1">{errors.phoneNumber}</p>
+                        )}
                     </div>
 
                     {/* Signup Button */}

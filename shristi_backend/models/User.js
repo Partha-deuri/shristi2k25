@@ -9,7 +9,7 @@ const UserSchema = new mongoose.Schema({
   registeredEvents: [{ type: mongoose.Schema.Types.ObjectId, ref: "Event" }],
   notifications: { type: [String], default: [] },
   rollNumber: { type: String, required: true },
-  whatsappNumber: { type: String, required: true, unique:true },
+  whatsappNumber: { type: String, required: true },
   isNeristian: { type: Boolean, default: false },
   department: { type: String },
   year: { type: String },
