@@ -1,93 +1,92 @@
 [
   {
-    "name": "Road Rampage Rally",
-    "department": "ME",
-    "description": "N/A",
-    "date": "2025-04-09",
-    "time": "01:00 PM",
-    "venue": "Football Ground",
-    "registrations": [],
-    "notifications": [
-      
-    ],
-    "registrationsClosed": false,
-    "imagePath": "/me/road_rampage_rally.jpg",
-    "rules": [
-      
-    ],
-    "prizes": "N/A"
-  },
-  {
-    "name": "Thermo Thrill Regatta",
-    "department": "ME",
-    "description": "N/A",
-    "date": "2025-04-06",
-    "time": "12:00 PM",
-    "venue": "Near Civil Department",
-    "registrations": [],
-    "notifications": [
-      
-    ],
-    "registrationsClosed": false,
-    "imagePath": "/me/thermo_thrill_regatta.jpg",
-    "rules": [
-      
-    ],
-    "prizes": "N/A"
-  },
-  {
-    "name": "Thermo Thrill Regatta",
-    "department": "ME",
-    "description": "N/A",
-    "date": "2025-04-06",
-    "time": "12:00 PM",
-    "venue": "Near Civil Department",
-    "registrations": [],
-    "notifications": [
-      
-    ],
-    "registrationsClosed": false,
-    "imagePath": "/me/thermo_thrill_regatta.jpg",
-    "rules": [
-      
-    ],
-    "prizes": "N/A"
-  },
-  {
-    "name": "Mechano Mind Master",
-    "department": "ME",
+    "name": "Forestry Quizzz!",
+    "department": "FO",
     "description": "N/A",
     "date": "2025-04-04",
-    "time": "05:00 PM",
-    "venue": "Academic Room No. 1",
+    "time": "18:15",
+    "venue": "Room No. 07",
     "registrations": [],
     "notifications": [
       
     ],
     "registrationsClosed": false,
-    "imagePath": "/me/mechano_mind_master.jpg",
+    "imagePath": "/fo/quizzz.jpg",
     "rules": [
       
     ],
-    "prizes": "N/A"
+    "prizes": "1st: 3,500/- \n2nd: 2,500/-\n3rd: 1,500/-"
   },
-  
   {
-    "name": "Skyward Sling",
-    "department": "ME",
+    "name": "Forest Detactives",
+    "department": "FO",
     "description": "N/A",
     "date": "2025-04-12",
-    "time": "10:30 AM",
-    "venue": "Football Ground",
+    "time": "13:00",
+    "venue": "Forestry Dept. and Nursery",
     "registrations": [],
     "notifications": [
       
     ],
     "registrationsClosed": false,
-    "imagePath": "",
+    "imagePath": "/fo/forest_detactives.jpg",
     "rules": [
       
     ],
-    "prizes": "Prize Pool Rs. 9000"
+    "prizes": "1st: 3,500/- \n2nd: 2,500/-\n3rd: 1,500/-"
+  },
+  {
+    "name": "Poster Making",
+    "department": "FO",
+    "description": "N/A",
+    "date": "2025-04-09",
+    "time": "17:00",
+    "venue": "Room No. 08",
+    "registrations": [],
+    "notifications": [
+      
+    ],
+    "registrationsClosed": false,
+    "imagePath": "/fo/poster.jpg",
+    "rules": [
+      
+    ],
+    "prizes": "1st: 3,500/- \n2nd: 2,500/-\n3rd: 1,500/-"
+  },
+  {
+    "name": "Forester's Photography",
+    "department": "FO",
+    "description": "N/A",
+    "date": "2025-04-09",
+    "time": "16:00",
+    "venue": "Room No. 08",
+    "registrations": [],
+    "notifications": [
+      
+    ],
+    "registrationsClosed": false,
+    "imagePath": "/fo/photography.jpg",
+    "rules": [
+      
+    ],
+    "prizes": "1st: 3,500/- \n2nd: 2,500/-\n3rd: 1,500/-"
+  },
+  {
+    "name": "Eco-Tech Model",
+    "department": "FO",
+    "description": "N/A",
+    "date": "2025-04-11",
+    "time": "10:00",
+    "venue": "Room No. 08",
+    "registrations": [],
+    "notifications": [
+      
+    ],
+    "registrationsClosed": false,
+    "imagePath": "/fo/eco_tech.jpg",
+    "rules": [
+      
+    ],
+    "prizes": "1st: 5,000/- \n2nd: 4,000/-\n3rd: 2,500/-"
   }
 ]

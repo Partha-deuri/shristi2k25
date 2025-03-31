@@ -123,7 +123,22 @@ const DepartmentEvents = () => {
                                         {event.name}
                                     </h2>
                                     <p className="text-gray-300">
-                                        {event.description}
+                                        {new Date(
+                                            `1970-01-01T${event.time}`
+                                        ).toLocaleTimeString([], {
+                                            hour: "2-digit",
+                                            minute: "2-digit",
+                                            hour12: true,
+                                        })}{" "}
+                                        {new Date(event.date).toLocaleString(
+                                            "en-US",
+                                            {
+                                                weekday: "long",
+                                                year: "numeric",
+                                                month: "long",
+                                                day: "numeric",
+                                            }
+                                        )}
                                     </p>
                                 </div>
                             </div>

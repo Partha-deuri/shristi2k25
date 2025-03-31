@@ -12,7 +12,10 @@ const Timeline = () => {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL || "http://localhost:5000/api"}/events`
         );
-        setEvents(response.data);
+        const sortedEvents = response.data.sort(
+          (a, b) => new Date(a.date) - new Date(b.date)
+        ); // Sort events by date
+        setEvents(sortedEvents);
       } catch (error) {
         console.error("Error fetching events:", error);
       }
@@ -74,8 +77,11 @@ const Timeline = () => {
                     <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
                       <h3 className="text-2xl font-bold">{item.name}</h3>
                       <p className="text-gray-400">
-                        {item.time}
-                        
+                        {new Date(`1970-01-01T${item.time}`).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: true, // Use 12-hour format
+                        })}
                       </p>
                       <p className="text-gray-400">
                         {new Date(item.date).toLocaleString("en-US", {
@@ -85,7 +91,6 @@ const Timeline = () => {
                           day: "numeric",
                         })}
                       </p>
-                     
                     </div>
                   </div>
                   <div
