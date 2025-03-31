@@ -1,0 +1,25 @@
+[
+  {
+    "name": "Hackathon",
+    "department": "CSE",
+    "description": "A competitive coding event to test your problem-solving skills.",
+    "date": "2025-12-01",
+    "time": "10:00 AM",
+    "venue": "CSE Seminal Hall",
+    "registrations": [],
+    "notifications": [
+      {
+        "message": "Registration is now open!",
+        "createdAt": "2023-11-01T10:00:00Z"
+      }
+    ],
+    "registrationsClosed": false,
+    "imagePath": "",
+    "rules": [
+      "Participants must bring their own laptops.",
+      "Internet access will be provided.",
+      "No external help is allowed."
+    ],
+    "prizes": "Winner: $500, Runner-up: $300"
+  }
+]

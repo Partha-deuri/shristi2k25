@@ -103,7 +103,7 @@ const IcEventDetails = () => {
                     headers: { Authorization: `Bearer ${token}` },
                 }
             );
-            navigate("/events"); // Redirect to events list after deletion
+            navigate("/ic/dashboard"); // Redirect to events list after deletion
         } catch (err) {
             console.error(err);
             alert("Failed to delete the event. Please try again.");
@@ -188,7 +188,16 @@ const IcEventDetails = () => {
                     </div>
 
                     <p className="text-lg mt-5">
-                        <strong>Prizes:</strong> {event.prizes}
+                        <strong>Prizes:</strong>{" "}
+                        {event.prizes && typeof event.prizes === "string" ? (
+                            <ul className="list-disc list-inside text-gray-300">
+                                {event.prizes.split("\n").map((prize, index) => (
+                                    <li key={index}>{prize}</li>
+                                ))}
+                            </ul>
+                        ) : (
+                            "No prizes available"
+                        )}
                     </p>
 
                     <div className="mt-5 flex gap-4">
@@ -275,11 +284,11 @@ const IcEventDetails = () => {
                                     <label className="block text-gray-300">
                                         Prizes
                                     </label>
-                                    <input
-                                        type="text"
-                                        name="prize"
+                                    <textarea
+                                        name="prizes"
                                         value={formData.prizes}
                                         onChange={handleInputChange}
+                                        placeholder="Prizes (one per line)"
                                         className="w-full p-2 rounded bg-gray-700 text-white"
                                     />
                                 </div>

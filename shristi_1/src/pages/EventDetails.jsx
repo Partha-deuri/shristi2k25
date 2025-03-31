@@ -130,7 +130,16 @@ const EventDetails = () => {
                     </div>
 
                     <p className="text-lg mt-5">
-                        <strong>Prizes:</strong> {event.prizes}
+                        <strong>Prizes:</strong>{" "}
+                        {event.prizes && typeof event.prizes === "string" ? (
+                            <ul className="list-disc list-inside text-gray-300">
+                                {event.prizes.split("\n").map((prize, index) => (
+                                    <li key={index}>{prize}</li>
+                                ))}
+                            </ul>
+                        ) : (
+                            "No prizes available"
+                        )}
                     </p>
 
                     <button

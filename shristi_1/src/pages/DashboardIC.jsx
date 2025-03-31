@@ -401,7 +401,7 @@ const DashboardIC = () => {
                                     />
                                     <textarea
                                         name="prizes"
-                                        placeholder="Prizes"
+                                        placeholder="Prizes (one per line)"
                                         value={newEvent.prizes}
                                         onChange={handleInputChange}
                                         className="w-full p-2 rounded bg-gray-700 text-white"
@@ -483,6 +483,15 @@ const DashboardIC = () => {
                                     alt={selectedEvent.name}
                                     className="w-full h-48 object-cover rounded-lg mt-4"
                                 />
+                            )}
+                            {selectedEvent.prizes && typeof selectedEvent.prizes === "string" ? (
+                                <ul className="list-disc list-inside">
+                                    {selectedEvent.prizes.split("\n").map((prize, index) => (
+                                        <li key={index}>{prize}</li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                "No prizes available"
                             )}
                             {selectedEvent.registrationsClosed && (
                                 <p className="text-red-500 font-bold mt-2">
@@ -572,7 +581,7 @@ const DashboardIC = () => {
                                         />
                                         <textarea
                                             name="prizes"
-                                            placeholder="Prizes"
+                                            placeholder="Prizes (one per line)"
                                             value={newEvent.prizes}
                                             onChange={handleInputChange}
                                             className="w-full p-2 rounded bg-gray-700 text-white"
