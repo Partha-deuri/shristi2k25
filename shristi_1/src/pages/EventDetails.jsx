@@ -122,19 +122,15 @@ const EventDetails = () => {
 
                     <div className="mt-5">
                         <h2 className="text-2xl font-semibold">Rules</h2>
-                        {event.rules && typeof event.rules === "string" ? (
-                            <ul className="list-disc list-inside text-gray-300">
-                                {event.rules.split("\n").map((rule, index) => (
-                                    <li key={index}>{rule}</li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <p>No rules available</p>
-                        )}
+                        <ul className="list-disc list-inside text-gray-300">
+                            {event?.rules[0].split("\n").map((rule, index) => (
+                                <li key={index}>{rule}</li>
+                            ))}
+                        </ul>
                     </div>
 
-                    <p className="text-lg mt-5">
-                        <strong>Prizes:</strong>{" "}
+                    <div className="text-lg mt-5">
+                        <strong>Prizes:</strong>
                         {event.prizes && typeof event.prizes === "string" ? (
                             <ul className="list-disc list-inside text-gray-300">
                                 {event.prizes.split("\n").map((prize, index) => (
@@ -144,7 +140,7 @@ const EventDetails = () => {
                         ) : (
                             "No prizes available"
                         )}
-                    </p>
+                    </div>
 
                     <button
                         className={`mt-6 ${
