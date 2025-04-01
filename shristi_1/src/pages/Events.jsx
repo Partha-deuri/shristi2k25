@@ -29,7 +29,7 @@ const Events = () => {
       id: "ME",
       name: "Mechanical",
       description: "Discover the art of machines and robotics.",
-      image: "/demo_2.jpg",
+      image: "/me/me.png",
     },
     {
       id: "EE",
