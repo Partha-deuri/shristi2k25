@@ -19,6 +19,7 @@ const IcEventDetails = () => {
     });
     const [loading, setLoading] = useState(true); // Loading state
     const [error, setError] = useState(null); // Error state
+    const [registrationsClosed, setRegistrationsClosed] = useState(false); // State for registration pause
 
     useEffect(() => {
         const fetchEventDetails = async () => {
@@ -59,6 +60,16 @@ const IcEventDetails = () => {
                 prizes: event.prizes,
                 rules: event.rules,
             });
+        }
+    }, [event]);
+
+    useEffect(() => {
+        if (event) {
+            const eventDateTime = new Date(`${event.date}T${event.time}`);
+            const now = new Date();
+            if (now > eventDateTime) {
+                setRegistrationsClosed(true); // Automatically pause registrations after event date and time
+            }
         }
     }, [event]);
 
@@ -107,6 +118,32 @@ const IcEventDetails = () => {
         } catch (err) {
             console.error(err);
             alert("Failed to delete the event. Please try again.");
+        }
+    };
+
+    const toggleRegistration = async () => {
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) navigate("/login");
+
+            await axios.put(
+                `${
+                    import.meta.env.VITE_API_URL || "http://localhost:5000/api"
+                }/events/${id}`,
+                { registrationsClosed: !registrationsClosed },
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+            setRegistrationsClosed(!registrationsClosed);
+            alert(
+                `Registrations have been ${
+                    registrationsClosed ? "resumed" : "paused"
+                } successfully!`
+            );
+        } catch (err) {
+            console.error(err);
+            alert("Failed to update registration status. Please try again.");
         }
     };
 
@@ -210,6 +247,22 @@ const IcEventDetails = () => {
                             className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
                         >
                             Delete Event
+                        </button>
+                        <button
+                            onClick={toggleRegistration}
+                            className={`${
+                                registrationsClosed
+                                    ? "bg-yellow-500"
+                                    : "bg-green-500"
+                            } text-white px-4 py-2 rounded hover:${
+                                registrationsClosed
+                                    ? "bg-yellow-600"
+                                    : "bg-green-600"
+                            } transition`}
+                        >
+                            {registrationsClosed
+                                ? "Resume Registrations"
+                                : "Pause Registrations"}
                         </button>
                     </div>
 
