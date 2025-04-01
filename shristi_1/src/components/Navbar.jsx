@@ -85,22 +85,10 @@ const Navbar = () => {
                         Timeline
                     </Link>
                     <Link
-                        to="/photos"
+                        to="/mun"
                         className="block w-full md:w-auto py-2 px-4 bg-transparent rounded-lg hover:bg-[#022a80] hover:scale-105 transition-transform text-center ml-6 md:ml-0" // Full width in dropdown
                     >
-                        Photos
-                    </Link>
-                    <Link
-                        to="/sponsors"
-                        className="block w-full md:w-auto py-2 px-4 bg-transparent rounded-lg hover:bg-[#022a80] hover:scale-105 transition-transform text-center ml-6 md:ml-0" // Full width in dropdown
-                    >
-                        Sponsors
-                    </Link>
-                    <Link
-                        to="/developers"
-                        className="block w-full md:w-auto py-2 px-4 bg-transparent rounded-lg hover:bg-[#022a80] hover:scale-105 transition-transform text-center ml-6 md:ml-0" // Full width in dropdown
-                    >
-                        Developers
+                        MUN
                     </Link>
                     <Link
                         to="https://tedxnerist.com/"

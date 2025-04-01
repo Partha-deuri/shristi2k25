@@ -82,8 +82,27 @@ const Home = () => {
       </div>
 
       {/* Main Hero Section */}
-      <main className="relative z-10 flex-grow pt-16 max-w-full overflow-hidden">
-        <section className="relative flex flex-col justify-center items-center text-center h-screen max-w-full overflow-hidden">
+      <main
+        className="relative z-10 flex-grow pt-16 max-w-full h-auto scrollbar-hide"
+        style={{
+          height: "auto",
+        }}
+      >
+        {/* Add the following CSS to hide the scrollbar */}
+        <style>
+          {`
+            .scrollbar-hide {
+              -ms-overflow-style: none; /* Internet Explorer 10+ */
+              scrollbar-width: none; /* Firefox */
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+              display: none; /* WebKit */
+            }
+          `}
+        </style>
+        <section
+          className="relative flex flex-col justify-center items-center text-center h-screen max-w-full overflow-hidden"
+        >
           <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-70"></div>
           <div className="relative z-10 px-6 animate-fade-in">
             <h1 className="text-6xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
@@ -125,8 +144,12 @@ const Home = () => {
         {events.map((event, index) => (
           <section
             key={index}
-            className={`relative flex flex-col justify-center items-center text-center h-screen bg-cover bg-center`}
-            style={{ backgroundImage: `url(${event.bgImage})` }}
+            className="relative flex flex-col justify-center items-center text-center h-screen"
+            style={{
+              backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${event.bgImage})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
           >
             <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-70"></div>
             <div className="relative z-10 px-6 animate-slide-up">
@@ -145,7 +168,14 @@ const Home = () => {
         ))}
 
         {/* About Section */}
-        <section className="relative flex flex-col justify-center items-center text-center h-screen bg-cover bg-center bg-[url('/path-to-about-image.jpg')] max-w-full overflow-hidden">
+        <section
+          className="relative flex flex-col justify-center items-center text-center h-screen"
+          style={{
+            backgroundImage: "linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/path-to-about-image.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
           <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-70"></div>
           <div className="relative z-10 px-6 animate-slide-up">
             <h2 className="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">
