@@ -4,6 +4,7 @@ import {
     FaCalendarAlt,
     FaBell,
     FaSignOutAlt,
+    FaChevronDown,
 } from "react-icons/fa";
 import axios from "axios";
 
@@ -12,6 +13,7 @@ const Dashboard = () => {
     const [notifications, setNotifications] = useState([]);
     const [loading, setLoading] = useState(true); // Loading state
     const [error, setError] = useState(null); // Error state
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to toggle sidebar visibility
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -92,18 +94,25 @@ const Dashboard = () => {
 
     return (
         <div className="flex bg-gray-900 text-white min-h-screen pt-16">
-            {/* Sidebar (sticky & Full Height) */}
-            <aside className="w-64 bg-gray-800 p-6 space-y-6 sticky h-screen top-16">
-                <h1 className="text-2xl font-bold text-yellow-500">
-                    Shristi Dashboard
-                </h1>
+            {/* Navbar for smaller devices */}
+            <nav className="bg-gray-800 p-4 fixed top-16 left-0 w-full z-50 md:hidden flex justify-between items-center">
+                <h1 className="text-xl font-bold text-yellow-500">Shristi Dashboard</h1>
+                <button
+                    onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                    className="text-white focus:outline-none"
+                >
+                    <FaChevronDown size={24} />
+                </button>
+            </nav>
+
+            {/* Sidebar (hidden on smaller devices) */}
+            <aside
+                className={`w-64 bg-gray-800 p-6 space-y-6 fixed top-32 left-0 h-screen transform ${
+                    isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+                } transition-transform duration-300 md:translate-x-0 md:sticky md:top-16`}
+            >
+                <h1 className="text-2xl font-bold text-yellow-500">Shristi Dashboard</h1>
                 <nav className="space-y-4">
-                    {/* <Link
-                        to="/"
-                        className="flex items-center space-x-2 hover:text-yellow-500"
-                    >
-                        <FaUser /> <span>Profile</span>
-                    </Link> */}
                     <Link
                         to="/events"
                         className="flex items-center space-x-2 hover:text-yellow-500"
@@ -116,12 +125,6 @@ const Dashboard = () => {
                     >
                         <FaBell /> <span>Timeline</span>
                     </Link>
-                    {/* <Link
-                        to="/settings"
-                        className="flex items-center space-x-2 hover:text-yellow-500"
-                    >
-                        <FaCog /> <span>Settings</span>
-                    </Link> */}
                     <button
                         onClick={handleLogout}
                         className="flex items-center space-x-2 text-red-500 hover:text-red-700 w-full"
@@ -131,9 +134,9 @@ const Dashboard = () => {
                 </nav>
             </aside>
 
-            {/* Main Content Wrapper (No More Overlap) */}
-            <div className="flex-1 min-h-screen ">
-                <main className="p-8">
+            {/* Main Content Wrapper */}
+            <div className="flex-1 min-h-screen">
+                <main className="p-8 mt-32 md:mt-0">
                     <h2 className="text-3xl font-bold">
                         Welcome, {user?.name} 👋
                     </h2>
