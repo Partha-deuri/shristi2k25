@@ -11,6 +11,7 @@ const EventDetails = () => {
     const [loading, setLoading] = useState(true); // Loading state
     const [error, setError] = useState(null); // Error state
     const [isRegistered, setIsRegistered] = useState(false); // State to track registration status
+    const [registrationClosed, setRegistrationClosed] = useState(false); // State for registration status
     const navigate = useNavigate(); // Hook to navigate to different routes
     useEffect(() => {
         const fetchEventDetails = async () => {
@@ -23,6 +24,7 @@ const EventDetails = () => {
                     }/events/${id}`
                 );
                 setEvent(response.data);
+                setRegistrationClosed(response.data.registrationsClosed); // Set registration status
 
                 // Check if user is already registered
                 const token = localStorage.getItem("token");
@@ -146,14 +148,20 @@ const EventDetails = () => {
 
                     <button
                         className={`mt-6 ${
-                            isRegistered
+                            registrationClosed
+                                ? "bg-gray-500 cursor-not-allowed"
+                                : isRegistered
                                 ? "bg-gray-500 cursor-not-allowed"
                                 : "bg-yellow-500 hover:bg-yellow-600"
                         } text-gray-900 font-bold py-2 px-6 rounded-lg transition`}
-                        onClick={handleRegister}
-                        disabled={isRegistered} // Disable button if already registered
+                        onClick={registrationClosed ? null : handleRegister} // Disable click if registration is closed
+                        disabled={registrationClosed || isRegistered} // Disable button if registration is closed or already registered
                     >
-                        {isRegistered ? "Already Registered" : "Register Now"}
+                        {registrationClosed
+                            ? "Registrations Closed"
+                            : isRegistered
+                            ? "Already Registered"
+                            : "Register Now"}
                     </button>
                 </div>
                 <div className="lg:w-1/2 lg:pl-6 mt-6 lg:mt-0">

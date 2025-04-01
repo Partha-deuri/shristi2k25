@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import {
     FaCalendarAlt,
     FaBell,
-    FaSignOutAlt
+    FaSignOutAlt,
+    FaChevronDown
 } from "react-icons/fa";
 import axios from "axios";
 
@@ -26,6 +27,7 @@ const DashboardIC = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [loading, setLoading] = useState(true); // Loading state
     const [error, setError] = useState(null); // Error state
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to toggle sidebar visibility
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -271,11 +273,24 @@ const DashboardIC = () => {
 
     return (
         <div className="flex bg-gray-900 text-white min-h-screen pt-16">
-            {/* Sidebar (sticky & Full Height) */}
-            <aside className="w-64 bg-gray-800 p-6 space-y-6 sticky h-screen top-16">
-                <h1 className="text-2xl font-bold text-yellow-500">
-                    Shristi Dashboard
-                </h1>
+            {/* Navbar for smaller devices */}
+            <nav className="bg-gray-800 p-4 fixed top-16 left-0 w-full z-50 md:hidden flex justify-between items-center">
+                <h1 className="text-xl font-bold text-yellow-500">Shristi Dashboard</h1>
+                <button
+                    onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                    className="text-white focus:outline-none"
+                >
+                    <FaChevronDown size={24} />
+                </button>
+            </nav>
+
+            {/* Sidebar (hidden on smaller devices) */}
+            <aside
+                className={`w-64 bg-gray-800 p-6 space-y-6 fixed top-32 left-0 h-screen transform ${
+                    isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+                } transition-transform duration-300 md:translate-x-0 md:sticky md:top-16`}
+            >
+                <h1 className="text-2xl font-bold text-yellow-500">Shristi Dashboard</h1>
                 <nav className="space-y-4">
                     {/* <Link
                         to="/"
@@ -312,7 +327,7 @@ const DashboardIC = () => {
 
             {/* Main Content Wrapper (No More Overlap) */}
             <div className="flex-1 min-h-screen ">
-                <main className="p-8">
+                <main className="p-8 mt-32 md:mt-0">
                     {/* Summary Section */}
                     <section className="mb-6 bg-gray-800 p-6 rounded-lg">
                         <h3 className="text-2xl font-semibold text-yellow-500">Event Statistics</h3>
@@ -454,6 +469,11 @@ const DashboardIC = () => {
                                     <p className="text-gray-400">
                                         <span className="font-semibold">Time:</span> {new Date(`1970-01-01T${event.time}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
                                     </p>
+                                    {event.registrationsClosed ? (
+                                        <p className="text-red-500 font-bold mt-2">Registrations Paused</p>
+                                    ) : (
+                                        <p className="text-green-500 font-bold mt-2">Registrations Open</p>
+                                    )}
                                 </div>
                             ))}
                         </div>

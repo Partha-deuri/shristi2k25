@@ -17,7 +17,7 @@ const Events = () => {
       id: "CSE",
       name: "Computer Science",
       description: "Explore the world of algorithms, coding, and AI.",
-      image: "/demo_2.jpg",
+      image: "/cse/cse.png",
     },
     {
       id: "ECE",
