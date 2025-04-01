@@ -39,7 +39,8 @@ const Signup = () => {
             newErrors.confirmPassword = "Passwords do not match!";
         }
         if (whatsappNumber.length !== 10) {
-            newErrors.whatsappNumber = "WhatsApp number must be exactly 10 digits!";
+            newErrors.whatsappNumber =
+                "WhatsApp number must be exactly 10 digits!";
         }
 
         if (Object.keys(newErrors).length > 0) {
@@ -70,13 +71,15 @@ const Signup = () => {
                         department: isNeristian ? department : "N/A",
                         rollNumber: isNeristian ? rollNumber : "N/A",
                         year: isNeristian ? year : "N/A",
-                        role: "user"
+                        role: "user",
                     },
                 },
             });
         } catch (err) {
             console.error(err);
-            const errorMessage = err.response?.data?.message || "An error occurred. Please try again.";
+            const errorMessage =
+                err.response?.data?.message ||
+                "An error occurred. Please try again.";
             setBackendError(errorMessage);
             toast.error(errorMessage); // Show toast notification
         }
@@ -89,7 +92,9 @@ const Signup = () => {
                     Create an Account
                 </h2>
                 {backendError && (
-                    <p className="text-red-500 text-center mb-4">{backendError}</p>
+                    <p className="text-red-500 text-center mb-4">
+                        {backendError}
+                    </p>
                 )}
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Name Input */}
@@ -106,7 +111,9 @@ const Signup = () => {
                             required
                         />
                         {errors.name && (
-                            <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+                            <p className="text-red-500 text-sm mt-1">
+                                {errors.name}
+                            </p>
                         )}
                     </div>
 
@@ -123,6 +130,9 @@ const Signup = () => {
                             onChange={(e) => setEmail(e.target.value)}
                             required
                         />
+                        <p className="text-gray-400 text-sm mt-1">
+                            An OTP will be sent to this email.
+                        </p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -157,7 +167,9 @@ const Signup = () => {
                                 required
                             />
                             {errors.confirmPassword && (
-                                <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>
+                                <p className="text-red-500 text-sm mt-1">
+                                    {errors.confirmPassword}
+                                </p>
                             )}
                         </div>
                     </div>
@@ -181,7 +193,9 @@ const Signup = () => {
                             required
                         />
                         {errors.whatsappNumber && (
-                            <p className="text-red-500 text-sm mt-1">{errors.whatsappNumber}</p>
+                            <p className="text-red-500 text-sm mt-1">
+                                {errors.whatsappNumber}
+                            </p>
                         )}
                     </div>
 
@@ -219,10 +233,14 @@ const Signup = () => {
                                 <select
                                     className="w-full px-4 py-2 mt-1 pr-8 rounded-lg bg-gray-700 border border-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500 outline-none appearance-none text-gray-200"
                                     value={department}
-                                    onChange={(e) => setDepartment(e.target.value)}
+                                    onChange={(e) =>
+                                        setDepartment(e.target.value)
+                                    }
                                     required
                                 >
-                                    <option value="" disabled>Select your department</option>
+                                    <option value="" disabled>
+                                        Select your department
+                                    </option>
                                     <option value="CSE">CSE</option>
                                     <option value="ECE">ECE</option>
                                     <option value="EE">EE</option>

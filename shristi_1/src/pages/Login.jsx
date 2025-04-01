@@ -67,6 +67,7 @@ const Login = () => {
                             onChange={(e) => setEmail(e.target.value)}
                             required
                         />
+                        
                         {errors.email && (
                             <p className="text-red-500 text-sm mt-1">{errors.email}</p>
                         )}
