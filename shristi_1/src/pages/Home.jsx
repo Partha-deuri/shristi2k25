@@ -62,7 +62,7 @@ const Home = () => {
     {
       title: "Watt-a-Thon",
       description: "Test your engineering skills in this electrifying competition of innovation and energy!",
-      link: "/megaevents/wattathon",
+      link: "/event/67ec4ef6b0c5786607b06a0d",
       bgImage: "/path-to-wattathon-image.jpg",
       buttonColor: "from-pink-600 to-red-500",
     },
