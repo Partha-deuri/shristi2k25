@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import ThreeScene from "../components/ThreeScene";
 
 const Home = () => {
   const targetDate = new Date("2025-04-09T00:00:00");
@@ -26,9 +25,15 @@ const Home = () => {
 
   return (
     <div className="relative bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white min-h-screen flex flex-col max-w-full overflow-hidden">
-      {/* Three.js Scene */}
+      {/* Video Background */}
       <div className="fixed inset-0 z-0">
-        <ThreeScene /> {/* Render Three.js animation as a sticky background */}
+        <video
+          className="w-full h-full object-cover"
+          src="\bg\bg_1.mp4"
+          autoPlay
+          loop
+          muted
+        ></video>
       </div>
 
       {/* Main Hero Section */}
