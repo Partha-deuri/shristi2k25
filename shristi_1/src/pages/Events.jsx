@@ -11,7 +11,7 @@ const Events = () => {
       id: "Techno",
       name: "Techno",
       description: "",
-      image: "/SHRISTI_w_border.png",
+      image: "/techno/techno.jpg",
     },
     {
       id: "CSE",

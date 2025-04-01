@@ -118,7 +118,7 @@ exports.deleteEvent = async (req, res) => {
 
 exports.getEventById = async (req, res) => {
   try {
-    const event = await Event.findById(req.params.id).populate('registrations', 'name email');
+    const event = await Event.findById(req.params.id).populate('registrations', 'name email whatsappNumber');
     if (!event) return res.status(404).json({ message: 'Event not found' });
     res.json(event);
   } catch (err) {
