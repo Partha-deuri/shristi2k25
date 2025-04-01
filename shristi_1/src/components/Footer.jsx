@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="relative z-20 bg-gradient-to-r from-indigo-800 via-purple-700 to-indigo-800 text-white py-6 mt-auto">
+    <footer className="relative z-20 bg-gradient-to-r from-[#011640] to-[#022a80] text-white py-6 mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
           

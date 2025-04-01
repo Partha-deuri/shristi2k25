@@ -23,13 +23,58 @@ const Home = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const events = [
+    {
+      title: "Drone Wars",
+      description: "Witness the clash of drones in an epic aerial battle for supremacy!",
+      link: "/event/67ec1d9d8fe39419ab64e83b",
+      bgImage: "/path-to-robowar-image.jpg",
+      buttonColor: "from-red-600 to-pink-500",
+    },
+    {
+      title: "Scavenger Hunt",
+      description: "Embark on an adventurous quest to solve riddles and uncover hidden treasures!",
+      link: "/event/67eade8d42a70ee0928a8825",
+      bgImage: "/path-to-treasurehunt-image.jpg",
+      buttonColor: "from-green-600 to-teal-500",
+    },
+    {
+      title: "Hack Shristi",
+      description: "Showcase your coding prowess and build innovative solutions to real-world challenges.",
+      link: "/event/67eac7ece2d67841f5d4cbac",
+      bgImage: "/path-to-hackathon-image.jpg",
+      buttonColor: "from-blue-600 to-cyan-500",
+    },
+    {
+      title: "SUMO ROBO",
+      description: "Watch robots battle it out in a thrilling sumo-style competition!",
+      link: "/event/67ec1a898fe39419ab64dea6",
+      bgImage: "/path-to-sumorobo-image.jpg",
+      buttonColor: "from-purple-600 to-indigo-500",
+    },
+    {
+      title: "CAD IT",
+      description: "Unleash your creativity and design skills in this exciting CAD modeling contest.",
+      link: "/event/67eb96e58fe39419ab647bbd",
+      bgImage: "/path-to-cadit-image.jpg",
+      buttonColor: "from-orange-600 to-yellow-500",
+    },
+    {
+      title: "Watt-a-Thon",
+      description: "Test your engineering skills in this electrifying competition of innovation and energy!",
+      link: "/megaevents/wattathon",
+      bgImage: "/path-to-wattathon-image.jpg",
+      buttonColor: "from-pink-600 to-red-500",
+    },
+  ];
+
   return (
     <div className="relative bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white min-h-screen flex flex-col max-w-full overflow-hidden">
       {/* Video Background */}
       <div className="fixed inset-0 z-0">
         <video
           className="w-full h-full object-cover"
-          src="\bg\bg_1.mp4"
+          src="\bg\bg_4.mp4"
           autoPlay
           loop
           muted
@@ -42,10 +87,10 @@ const Home = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-70"></div>
           <div className="relative z-10 px-6 animate-fade-in">
             <h1 className="text-6xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
-              Shristi Tech Fest
+              Shristi 2k25
             </h1>
             <p className="text-xl text-gray-300 max-w-2xl">
-              The biggest tech fest of NERIST is here! Get ready for an exciting journey of innovation, competition, and networking.
+            Welcome to SHRISTI – where innovation, technology, and creativity come alive! 🚀
             </p>
             {/* Countdown Timer */}
             <div className="mt-6 flex justify-center gap-6 text-3xl font-semibold text-white">
@@ -76,54 +121,28 @@ const Home = () => {
           </div>
         </section>
 
-        {/* Event Sections */}
-        {/* Robo War */}
-        <section className="relative flex flex-col justify-center items-center text-center h-screen bg-cover bg-center bg-[url('/path-to-robowar-image.jpg')] max-w-full overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-70"></div>
-          <div className="relative z-10 px-6 animate-slide-up">
-            <h2 className="text-5xl font-bold text-yellow-500 mb-4">Robo War</h2>
-            <p className="text-lg text-gray-300 max-w-2xl">
-              Witness the clash of metal warriors as teams battle it out in the ultimate robotic showdown!
-            </p>
-            <div className="mt-8">
-              <Link to="/events/robowar" className="px-6 py-3 bg-gradient-to-r from-red-600 to-pink-500 rounded-lg text-lg font-semibold hover:shadow-lg hover:scale-105 transition-transform">
-                Learn More
-              </Link>
+        {/* Dynamic Event Sections */}
+        {events.map((event, index) => (
+          <section
+            key={index}
+            className={`relative flex flex-col justify-center items-center text-center h-screen bg-cover bg-center`}
+            style={{ backgroundImage: `url(${event.bgImage})` }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-70"></div>
+            <div className="relative z-10 px-6 animate-slide-up">
+              <h2 className="text-5xl font-bold text-yellow-500 mb-4">{event.title}</h2>
+              <p className="text-lg text-gray-300 max-w-2xl">{event.description}</p>
+              <div className="mt-8">
+                <Link
+                  to={event.link}
+                  className={`px-6 py-3 bg-gradient-to-r ${event.buttonColor} rounded-lg text-lg font-semibold hover:shadow-lg hover:scale-105 transition-transform`}
+                >
+                  Learn More
+                </Link>
+              </div>
             </div>
-          </div>
-        </section>
-
-        {/* Treasure Hunt */}
-        <section className="relative flex flex-col justify-center items-center text-center h-screen bg-cover bg-center bg-[url('/path-to-treasurehunt-image.jpg')] max-w-full overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-70"></div>
-          <div className="relative z-10 px-6 animate-slide-up">
-            <h2 className="text-5xl font-bold text-yellow-500 mb-4">Treasure Hunt</h2>
-            <p className="text-lg text-gray-300 max-w-2xl">
-              Follow the clues, solve the mysteries, and race against time to find the hidden treasure!
-            </p>
-            <div className="mt-8">
-              <Link to="/events/treasurehunt" className="px-6 py-3 bg-gradient-to-r from-green-600 to-teal-500 rounded-lg text-lg font-semibold hover:shadow-lg hover:scale-105 transition-transform">
-                Learn More
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* Hackathon */}
-        <section className="relative flex flex-col justify-center items-center text-center h-screen bg-cover bg-center bg-[url('/path-to-hackathon-image.jpg')] max-w-full overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-70"></div>
-          <div className="relative z-10 px-6 animate-slide-up">
-            <h2 className="text-5xl font-bold text-yellow-500 mb-4">Hackathon</h2>
-            <p className="text-lg text-gray-300 max-w-2xl">
-              Bring your coding skills to the test! Collaborate, innovate, and develop solutions for real-world problems.
-            </p>
-            <div className="mt-8">
-              <Link to="/events/hackathon" className="px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-lg text-lg font-semibold hover:shadow-lg hover:scale-105 transition-transform">
-                Learn More
-              </Link>
-            </div>
-          </div>
-        </section>
+          </section>
+        ))}
 
         {/* About Section */}
         <section className="relative flex flex-col justify-center items-center text-center h-screen bg-cover bg-center bg-[url('/path-to-about-image.jpg')] max-w-full overflow-hidden">

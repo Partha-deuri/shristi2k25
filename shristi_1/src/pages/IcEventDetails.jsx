@@ -147,6 +147,33 @@ const IcEventDetails = () => {
         }
     };
 
+    const downloadCSV = () => {
+        if (!event?.registrations?.length) {
+            alert("No registrations available to download.");
+            return;
+        }
+    
+        const headers = ["#", "Name", "Email", "WhatsApp Number"];
+        const rows = event.registrations.map((user, index) => [
+            index + 1,
+            user.name,
+            user.email,
+            user.whatsappNumber || "N/A",
+        ]);
+    
+        const csvContent =
+            [headers, ...rows].map((row) => row.join(",")).join("\n");
+    
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const link = document.createElement("a");
+        const fileName = `${event.name.replace(/\s+/g, "_")}_registrations.csv`;
+        link.setAttribute("href", URL.createObjectURL(blob));
+        link.setAttribute("download", fileName);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     if (loading) {
         return (
             <div className="bg-gray-900 text-white min-h-screen flex items-center justify-center">
@@ -389,14 +416,41 @@ const IcEventDetails = () => {
                             Total Registered Users:{" "}
                             <strong>{event?.registrations?.length || 0}</strong>
                         </p>
-                        <ul className="list-disc list-inside text-gray-300">
-                            {event?.registrations?.map((user, index) => (
-                                <li key={index}>
-                                    {user.name} ({user.email}){" - "}
-                                    {user.whatsappNumber || "N/A"}
-                                </li>
-                            ))}
-                        </ul>
+                        <button
+                            onClick={downloadCSV}
+                            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition mb-4"
+                        >
+                            Download Table as CSV
+                        </button>
+                        <table className="table-auto w-full text-left text-gray-300">
+                            <thead>
+                                <tr className="bg-gray-700">
+                                    <th className="px-4 py-2">#</th>
+                                    <th className="px-4 py-2">Name</th>
+                                    <th className="px-4 py-2">Email</th>
+                                    <th className="px-4 py-2">WhatsApp Number</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {event?.registrations?.map((user, index) => (
+                                    <tr
+                                        key={index}
+                                        className={`${
+                                            index % 2 === 0
+                                                ? "bg-gray-800"
+                                                : "bg-gray-700"
+                                        }`}
+                                    >
+                                        <td className="px-4 py-2">{index + 1}</td>
+                                        <td className="px-4 py-2">{user.name}</td>
+                                        <td className="px-4 py-2">{user.email}</td>
+                                        <td className="px-4 py-2">
+                                            {user.whatsappNumber || "N/A"}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                 ) : (
                     <p className="text-gray-300">

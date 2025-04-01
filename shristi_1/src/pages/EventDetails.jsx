@@ -46,6 +46,8 @@ const EventDetails = () => {
         };
 
         fetchEventDetails();
+
+        window.scrollTo(0, 0); // Scroll to the top when the component is mounted
     }, [id]);
 
     const handleRegister = async () => {
@@ -99,99 +101,103 @@ const EventDetails = () => {
     }
 
     return (
-        <div className="bg-gray-900 text-white min-h-screen flex flex-col items-center px-6 py-10 mt-16">
-            <div className="max-w-6xl bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col lg:flex-row">
-                <div className="lg:w-1/2 lg:pr-6">
-                    <h1 className="text-4xl font-bold">{event.name}</h1>
-                    <p className="text-gray-300 mt-3">{event.description}</p>
+        <div className="pt-16 transition-all duration-300 ease-in-out"> {/* Added smooth transition */}
+            <div className="pt-12 bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white min-h-screen p-6">
+                <div className="max-w-6xl mx-auto bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col lg:flex-row">
+                    <div className="lg:w-1/2 lg:pr-6">
+                        <h1 className="text-5xl font-bold text-yellow-500">{event.name}</h1>
+                        <p className="text-lg text-gray-300 mt-3">{event.description}</p>
 
-                    <div className="mt-5">
-                        <p>
-                            <strong>Date:</strong> {new Date(event.date).toLocaleDateString()}
-                        </p>
-                        <p>
-                            <strong>Time:</strong>{" "}
-                            {new Date(`1970-01-01T${event.time}`).toLocaleTimeString([], {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                                hour12: true,
-                            })}
-                        </p>
-                        <p>
-                            <strong>Venue:</strong> {event.venue}
-                        </p>
-                    </div>
+                        <div className="mt-5">
+                            <p>
+                                <strong>Date:</strong> {new Date(event.date).toLocaleDateString()}
+                            </p>
+                            <p>
+                                <strong>Time:</strong>{" "}
+                                {new Date(`1970-01-01T${event.time}`).toLocaleTimeString([], {
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                    hour12: true,
+                                })}
+                            </p>
+                            <p>
+                                <strong>Venue:</strong> {event.venue}
+                            </p>
+                        </div>
 
-                    <div className="mt-5">
-                        <h2 className="text-2xl font-semibold">Rules</h2>
-                        <ul className="list-disc list-inside text-gray-300">
-                            {event?.rules[0] 
-                                ? event.rules[0].split("\n").map((rule, index) => (
-                                    <li key={index}>{rule}</li>
-                                  ))
-                                : <li>No rules available</li>}
-                        </ul>
-                    </div>
-
-                    <div className="text-lg mt-5">
-                        <strong>Prizes:</strong>
-                        {event.prizes && typeof event.prizes === "string" ? (
+                        <div className="mt-5">
+                            <h2 className="text-3xl font-semibold text-purple-400">Rules</h2>
                             <ul className="list-disc list-inside text-gray-300">
-                                {event.prizes.split("\n").map((prize, index) => (
-                                    <li key={index}>{prize}</li>
-                                ))}
+                                {event?.rules[0]
+                                    ? event.rules[0].split("\n").map((rule, index) => (
+                                        <li key={index}>{rule}</li>
+                                      ))
+                                    : <li>No rules available</li>}
                             </ul>
-                        ) : (
-                            "No prizes available"
-                        )}
+                        </div>
+
+                        <div className="text-lg mt-5">
+                            <h2 className="text-3xl font-semibold text-green-400">Prizes</h2>
+                            {event.prizes && typeof event.prizes === "string" ? (
+                                <ul className="list-disc list-inside text-gray-300">
+                                    {event.prizes.split("\n").map((prize, index) => (
+                                        <li key={index}>{prize}</li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                "No prizes available"
+                            )}
+                        </div>
+
+                        <div className="mt-8 text-center">
+                            <button
+                                className={`${
+                                    registrationClosed
+                                        ? "bg-gray-500 cursor-not-allowed"
+                                        : isRegistered
+                                        ? "bg-gray-500 cursor-not-allowed"
+                                        : "bg-yellow-500 hover:bg-yellow-600"
+                                } text-black font-bold py-2 px-6 rounded-lg transition-all duration-300`}
+                                onClick={registrationClosed ? null : handleRegister}
+                                disabled={registrationClosed || isRegistered}
+                            >
+                                {registrationClosed
+                                    ? "Registrations Closed"
+                                    : isRegistered
+                                    ? "Already Registered"
+                                    : "Register Now"}
+                            </button>
+                        </div>
                     </div>
-
-                    <button
-                        className={`mt-6 ${
-                            registrationClosed
-                                ? "bg-gray-500 cursor-not-allowed"
-                                : isRegistered
-                                ? "bg-gray-500 cursor-not-allowed"
-                                : "bg-yellow-500 hover:bg-yellow-600"
-                        } text-gray-900 font-bold py-2 px-6 rounded-lg transition`}
-                        onClick={registrationClosed ? null : handleRegister} // Disable click if registration is closed
-                        disabled={registrationClosed || isRegistered} // Disable button if registration is closed or already registered
-                    >
-                        {registrationClosed
-                            ? "Registrations Closed"
-                            : isRegistered
-                            ? "Already Registered"
-                            : "Register Now"}
-                    </button>
-                </div>
-                <div className="lg:w-1/2 lg:pl-6 mt-6 lg:mt-0">
-                    <img
-                        src={event.imagePath}
-                        alt={event.title}
-                        className="w-full object-contain rounded-lg cursor-pointer"
-                        onClick={() => setSelectedImage(event.image)} // Set image for full screen
-                    />
-                </div>
-            </div>
-
-            {/* Full-Screen Image Modal */}
-            {selectedImage && (
-                <div className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50">
-                    <div className="relative max-w-3xl w-full p-4">
-                        <button
-                            className="absolute top-4 right-4 bg-red-500 text-white p-2 rounded-full text-xl flex items-center justify-center w-10 h-10 hover:bg-red-600 transition duration-300 cursor-pointer"
-                            onClick={() => setSelectedImage(null)} // Close modal
-                        >
-                            ✕
-                        </button>
+                    <div className="lg:w-1/2 lg:pl-6 mt-6 lg:mt-0">
                         <img
-                            src={selectedImage}
-                            alt="Selected"
-                            className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
+                            src={event.imagePath}
+                            alt={event.title}
+                            className="w-full object-contain rounded-lg cursor-pointer"
+                            onClick={() => setSelectedImage(event.imagePath)} // Ensure correct image path is set
                         />
                     </div>
                 </div>
-            )}
+
+                {/* Full-Screen Image Modal */}
+                {selectedImage && (
+                    <div className="fixed inset-0 bg-black bg-opacity-90 flex justify-center items-center z-50">
+                        <div className="relative w-full h-full flex justify-center items-center">
+                            <button
+                                className="absolute top-4 right-4 bg-red-500 text-white p-2 rounded-full text-xl flex items-center justify-center w-10 h-10 hover:bg-red-600 transition duration-300 cursor-pointer"
+                                onClick={() => setSelectedImage(null)} // Close modal
+                            >
+                                ✕
+                            </button>
+                            <img
+                                src={selectedImage}
+                                alt="Selected"
+                                className="w-auto h-auto max-w-full max-h-full object-contain rounded-lg"
+                            />
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

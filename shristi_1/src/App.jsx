@@ -24,6 +24,7 @@ import OtpPage from "./pages/OtpPage.jsx";
 import IcEventDetails from "./pages/IcEventDetails.jsx";
 import ErrorPage from "./pages/ErrorPage";
 import MUN from "./pages/MUN"; // Import MUN page
+import MegaEventDetails from "./pages/MegaEventDetails"; // Import MegaEventDetails
 
 class ErrorBoundary extends React.Component {
     constructor(props) {
@@ -73,6 +74,7 @@ const App = () => {
                         element={<DepartmentEvents />}
                     />
                     <Route path="/event/:id" element={<EventDetails />} />
+                    <Route path="/megaevents/:eventId" element={<MegaEventDetails />} /> {/* Add MegaEventDetails route */}
                     <Route path="/timeline" element={<Timeline />} />
                     <Route path="/game" element={<Game />} />
                     <Route path="/sponsors" element={<Sponsors />} />
