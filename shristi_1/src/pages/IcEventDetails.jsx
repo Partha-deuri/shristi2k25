@@ -176,17 +176,15 @@ const IcEventDetails = () => {
 
                     <div className="mt-5">
                         <h2 className="text-2xl font-semibold">Rules</h2>
-                        <ul className="list-disc list-inside text-gray-300">
-                            {event.rules && typeof event.rules === "string" ? (
-                                event.rules
-                                    .split("\n")
-                                    .map((rule, index) => (
-                                        <li key={index}>{rule}</li>
-                                    ))
-                            ) : (
-                                <li>No rules available</li>
-                            )}
-                        </ul>
+                        {event.rules && typeof event.rules === "string" ? (
+                            <ul className="list-disc list-inside text-gray-300">
+                                {event.rules.split("\n").map((rule, index) => (
+                                    <li key={index}>{rule}</li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p>No rules available</p>
+                        )}
                     </div>
 
                     <p className="text-lg mt-5">
