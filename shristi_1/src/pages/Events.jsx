@@ -11,7 +11,7 @@ const Events = () => {
       id: "Techno",
       name: "Techno",
       description: "",
-      image: "/demo_2.jpg",
+      image: "/SHRISTI_w_border.png",
     },
     {
       id: "CSE",
@@ -23,7 +23,7 @@ const Events = () => {
       id: "ECE",
       name: "Electronics",
       description: "Dive into circuits, microcontrollers, and IoT.",
-      image: "/demo_2.jpg",
+      image: "/SHRISTI_w_border.png",
     },
     {
       id: "ME",
@@ -35,31 +35,31 @@ const Events = () => {
       id: "EE",
       name: "Electrical",
       description: "Uncover the mysteries of power systems and electromagnetism.",
-      image: "/demo_2.jpg",
+      image: "/ee/ee.png",
     },
     {
       id: "AE",
       name: "Agricultural",
       description: "Soar into the world of aerodynamics and space exploration.",
-      image: "/demo_2.jpg",
+      image: "/ae/ae.png",
     },
     {
       id: "CE",
       name: "Civil",
       description: "Build the future with innovative infrastructure and design.",
-      image: "/demo_2.jpg",
+      image: "/ce/ce.png",
     },
     {
       id: "FO",
       name: "Forestry",
       description: "Delve into the science of food processing and safety.",
-      image: "/demo_2.jpg",
+      image: "/fo/fo.png",
     },
     {
       id: "CMS",
       name: "Center of Management Studies",
       description: "Master the art of business and leadership.",
-      image: "/demo_2.jpg",
+      image: "/cms/cms.jpg",
     },
   ];
 
