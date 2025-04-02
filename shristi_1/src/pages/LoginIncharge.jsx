@@ -18,7 +18,7 @@ const LoginIncharge = () => {
     const checkloggedin = async () => {
         try {
             const token = localStorage.getItem("token");
-            if (token) navigate("/dashboard");
+            if (token) navigate("/ic/dashboard");
         } catch (err) {
             console.error(err);
         }

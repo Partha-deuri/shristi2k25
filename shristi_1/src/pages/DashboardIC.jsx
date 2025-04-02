@@ -54,6 +54,9 @@ const DashboardIC = () => {
                     }
                 );
                 setUser(userRes.data);
+                if(userRes.data.department === "admin"){
+                    navigate("/ic/admindash");
+                }
 
                 const eventsRes = await axios.get(
                     `${
