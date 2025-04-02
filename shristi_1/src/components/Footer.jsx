@@ -28,8 +28,9 @@ const Footer = () => {
           {/* Contact Section */}
           <div>
             <h2 className="text-xl font-bold">Contact Us</h2>
-            <p className="mt-2 text-gray-300">Email: contact@shristi.com</p>
-            <p className="mt-1 text-gray-300">Phone: +91 98765 43210</p>
+            {/* <p className="mt-2 text-gray-300">Email: contact@shristi.com</p> */}
+            <p className="mt-1 text-gray-300">Shiv Swapnil</p>
+            <p className="mt-1 text-gray-300">Phone: +91 82298 27312</p>
           </div>
         </div>
 
