@@ -16,6 +16,7 @@ const IcEventDetails = () => {
         venue: "",
         prizes: "",
         rules: "",
+        imagePath: "", // Added imagePath to formData
     });
     const [loading, setLoading] = useState(true); // Loading state
     const [error, setError] = useState(null); // Error state
@@ -59,6 +60,7 @@ const IcEventDetails = () => {
                 venue: event.venue,
                 prizes: event.prizes,
                 rules: event.rules,
+                imagePath: event.imagePath || "", // Initialize imagePath
             });
         }
     }, [event]);
@@ -380,6 +382,19 @@ const IcEventDetails = () => {
                                         name="rules"
                                         value={formData.rules}
                                         onChange={handleInputChange}
+                                        className="w-full p-2 rounded bg-gray-700 text-white"
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="block text-gray-300">
+                                        Image Path
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="imagePath"
+                                        value={formData.imagePath}
+                                        onChange={handleInputChange}
+                                        placeholder="Enter image URL"
                                         className="w-full p-2 rounded bg-gray-700 text-white"
                                     />
                                 </div>
