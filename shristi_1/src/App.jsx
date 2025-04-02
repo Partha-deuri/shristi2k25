@@ -11,7 +11,7 @@ import Timeline from "./pages/Timeline";
 import Game from "./pages/Game";
 import Sponsors from "./pages/Sponsors";
 import Photos from "./pages/Photos";
-import Developers from "./pages/Developers";
+import Organizers from "./pages/Organizers"; // Import Organizers page
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
@@ -80,7 +80,7 @@ const App = () => {
                     <Route path="/game" element={<Game />} />
                     <Route path="/sponsors" element={<Sponsors />} />
                     <Route path="/photos" element={<Photos />} />
-                    <Route path="/developers" element={<Developers />} />
+                    <Route path="/organizers" element={<Organizers />} /> {/* Add Organizers route */}
                     <Route path="/verify/otp" element={<OtpPage />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
