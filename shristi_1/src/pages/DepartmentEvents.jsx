@@ -7,58 +7,58 @@ const departments = [
         id: "Techno",
         name: "Techno",
         description: "",
-        image: "/demo_2.jpg",
+       
     },
     {
         id: "CSE",
         name: "Computer Science",
         description: "Explore the world of algorithms, coding, and AI.",
-        image: "/demo_2.jpg",
+       
     },
     {
         id: "ECE",
         name: "Electronics",
         description: "Dive into circuits, microcontrollers, and IoT.",
-        image: "/demo_2.jpg",
+       
     },
     {
         id: "ME",
         name: "Mechanical",
         description: "Discover the art of machines and robotics.",
-        image: "/demo_2.jpg",
+       
     },
     {
         id: "EE",
         name: "Electrical",
         description:
             "Uncover the mysteries of power systems and electromagnetism.",
-        image: "/demo_2.jpg",
+       
     },
     {
         id: "AE",
         name: "Agricultural",
         description:
             "Soar into the world of aerodynamics and space exploration.",
-        image: "/demo_2.jpg",
+       
     },
     {
         id: "CE",
         name: "Civil",
         description:
             "Build the future with innovative infrastructure and design.",
-        image: "/demo_2.jpg",
+       
     },
     {
         id: "FO",
         name: "Forestry",
         description: "Delve into the science of food processing and safety.",
-        image: "/demo_2.jpg",
+       
     },
     {
         id: "CMS",
         name: "Center of Management Studies",
         description: "Master the art of business and leadership.",
-        image: "/demo_2.jpg",
+       
     },
 ];
 
@@ -139,6 +139,17 @@ const DepartmentEvents = () => {
                                                 day: "numeric",
                                             }
                                         )}
+                                    </p>
+                                    <p
+                                        className={`mt-2 font-semibold ${
+                                            event.registrationsClosed
+                                                ? "text-red-500"
+                                                : "text-green-500"
+                                        }`}
+                                    >
+                                        {event.registrationsClosed
+                                            ? "Registration Closed"
+                                            : "Registration Open"}
                                     </p>
                                 </div>
                             </div>

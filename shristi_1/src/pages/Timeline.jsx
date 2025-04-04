@@ -44,7 +44,7 @@ const Timeline = () => {
                 <section className="max-w-3xl mx-auto py-10 relative">
                     <div className="absolute left-1/2 transform -translate-x-1/2 h-full">
                         {events.map((item, index) => {
-                            const isPast = new Date(item.time) < new Date();
+                            const isPast = new Date(`${item.date.slice(0,10)}T${item.time}`) < new Date();
                             return (
                                 <div
                                     key={index}
@@ -70,7 +70,7 @@ const Timeline = () => {
                     </div>
                     <div className="space-y-8">
                         {events.map((item, index) => {
-                            const isPast = new Date(item.time) < new Date();
+                            const isPast = new Date(`${item.date.slice(0,10)}T${item.time}`) < new Date();
                             return (
                                 <div
                                     key={index}

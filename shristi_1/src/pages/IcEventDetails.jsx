@@ -39,6 +39,7 @@ const IcEventDetails = () => {
                     }
                 );
                 setEvent(res.data);
+                setRegistrationsClosed(res.data.registrationsClosed); // Set initial registration status
             } catch (err) {
                 console.error(err);
                 setError("Failed to fetch event details.");
@@ -67,12 +68,15 @@ const IcEventDetails = () => {
 
     useEffect(() => {
         if (event) {
-            const eventDateTime = new Date(`${event.date}T${event.time}`);
+            const eventDateTime = new Date(`${event.date.split("T")[0]}T${event.time}`);
             const now = new Date();
             if (now > eventDateTime) {
-                setRegistrationsClosed(true); // Automatically pause registrations after event date and time
+                setRegistrationsClosed(true); 
+                closeRegistration()
+                // Automatically pause registrations after event date and time
             }
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [event]);
 
     const handleInputChange = (e) => {
@@ -143,6 +147,26 @@ const IcEventDetails = () => {
                     registrationsClosed ? "resumed" : "paused"
                 } successfully!`
             );
+        } catch (err) {
+            console.error(err);
+            alert("Failed to update registration status. Please try again.");
+        }
+    };
+    const closeRegistration = async () => {
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) navigate("/login");
+
+            await axios.put(
+                `${
+                    import.meta.env.VITE_API_URL || "http://localhost:5000/api"
+                }/events/${id}`,
+                { registrationsClosed: true },
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+            setRegistrationsClosed(true);
         } catch (err) {
             console.error(err);
             alert("Failed to update registration status. Please try again.");
@@ -282,14 +306,19 @@ const IcEventDetails = () => {
                         <button
                             onClick={toggleRegistration}
                             className={`${
-                                registrationsClosed
+                                !registrationsClosed
                                     ? "bg-yellow-500"
                                     : "bg-green-500"
                             } text-white px-4 py-2 rounded hover:${
-                                registrationsClosed
+                                !registrationsClosed
                                     ? "bg-yellow-600"
                                     : "bg-green-600"
-                            } transition`}
+                            } transition ${
+                                new Date() > new Date(`${event.date.split("T")[0]}T${event.time}`)
+                                    ? "cursor-not-allowed opacity-50"
+                                    : ""
+                            }`}
+                            disabled={new Date() > new Date(`${event.date.split("T")[0]}T${event.time}`)}
                         >
                             {registrationsClosed
                                 ? "Resume Registrations"

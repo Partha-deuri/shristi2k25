@@ -249,6 +249,10 @@ const Signup = () => {
                                     <option value="CE">CE</option>
                                     <option value="FO">FO</option>
                                     <option value="CMS">CMS</option>
+                                    <option value="Math">Math</option>
+                                    <option value="Phy">Phy</option>
+                                    <option value="Chem">Chem</option>
+                                    <option value="Others">Others</option>
                                 </select>
                             </div>
                             <div>
