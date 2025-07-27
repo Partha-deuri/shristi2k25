@@ -1,4 +1,4 @@
-# Shristi2k25 - Official Website
+# [Shristi2k25 - Official Website](https://shristi2k25.onrender.com/)
 
 ## Overview
 Shristi2k25 is the official website for **Shristi**, the annual technical fest of **NERIST**. Built using the **MERN stack** (MongoDB, Express.js, React.js, Node.js), this website provides a platform for event registrations, announcements, and interactive engagement for participants and organizers.
